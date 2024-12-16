@@ -5,12 +5,13 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { BiLogoLinkedin } from "react-icons/bi";
 import { BsBellFill, BsFillHouseDoorFill, BsFillPeopleFill, BsSuitcaseLgFill, BsChatDots } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 function MyNavbar() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <BiLogoLinkedin className="bg-primary text-white fs-1 rounded" />
+        <Link to={"/"}><BiLogoLinkedin className="bg-primary text-white fs-1 rounded" /></Link>
         <Navbar.Toggle aria-controls="navbarScroll" />
 
         <Navbar.Collapse id="navbarScroll">
@@ -19,7 +20,7 @@ function MyNavbar() {
           </Form>
           <Nav className="ms-auto my-2 my-lg-0" style={{ maxHeight: "100px" }} navbarScroll>
             <Nav.Link href="#action" className="fs-6 me-2 text-center">
-              <BsFillHouseDoorFill />
+              <Link to={"/"} style={{color:"#323232"}}><BsFillHouseDoorFill /></Link>
               <div className="fs-6">Home</div>
             </Nav.Link>
 
