@@ -4,36 +4,20 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { BiLogoLinkedin } from "react-icons/bi";
-import {
-  BsBellFill,
-  BsFillHouseDoorFill,
-  BsFillPeopleFill,
-  BsSuitcaseLgFill,
-  BsChatDots,
-  BsPersonCircle
-} from "react-icons/bs";
+import { BsBellFill, BsFillHouseDoorFill, BsFillPeopleFill, BsSuitcaseLgFill, BsChatDots, BsPersonCircle } from "react-icons/bs";
 
 function MyNavbar() {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
-      <Container fluid>
+    <Navbar expand="lg" className="bg-body-tertiary border border-bottom">
+      <Container>
         <BiLogoLinkedin className="bg-primary text-white fs-1 rounded"></BiLogoLinkedin>
         <Navbar.Toggle aria-controls="navbarScroll" />
 
         <Navbar.Collapse id="navbarScroll">
           <Form className="d-flex ms-2">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
+            <Form.Control type="search" placeholder="Search" className="me-2" aria-label="Search" />
           </Form>
-          <Nav
-            className="ms-auto my-2 my-lg-0"
-            style={{ maxHeight: "100px" }}
-            navbarScroll
-          >
+          <Nav className="ms-auto my-2 my-lg-0" style={{ maxHeight: "100px" }} navbarScroll>
             <Nav.Link href="#action" className="fs-4 me-2">
               <BsFillHouseDoorFill>Home</BsFillHouseDoorFill>
             </Nav.Link>
