@@ -1,4 +1,9 @@
 import { Container } from "react-bootstrap";
+import { FaBookmark } from "react-icons/fa6";
+import { PiNewspaperFill } from "react-icons/pi";
+import { MdGroups2, MdEventNote } from "react-icons/md";
+
+
 
 const AsideLeft = () => {
   return (
@@ -42,12 +47,37 @@ const AsideLeft = () => {
       <div className="rounded-4 bg-white mt-2">
         <div className="d-flex mx-1">
           <div>
-            <p className="fw-semibold m-2">Visitatori del Profilo</p>
+            <p className="fw-semibold m-2"> <FaBookmark /></p>
           </div>
-          <div className="ms-auto">
-            <p className="fw-semibold m-2">14</p>
+          <div>
+            <p className="fw-semibold m-2">Elementi Salvati</p>
           </div>
         </div>
+        <div className="d-flex mx-1">
+          <div>
+            <p className="fw-semibold m-2"><MdGroups2 /></p>
+          </div>
+          <div>
+            <p className="fw-semibold m-2">Gruppi</p>
+          </div>
+        </div>
+        <div className="d-flex mx-1">
+          <div>
+            <p className="fw-semibold m-2"> <PiNewspaperFill /></p>
+          </div>
+          <div>
+            <p className="fw-semibold m-2">Newsletter</p>
+          </div>
+        </div>
+        <div className="d-flex mx-1">
+          <div>
+            <p className="fw-semibold m-2"> <MdEventNote /></p>
+          </div>
+          <div>
+            <p className="fw-semibold m-2">Eventi</p>
+          </div>
+        </div>
+        
       </div>
       <div></div>
       <div></div>
