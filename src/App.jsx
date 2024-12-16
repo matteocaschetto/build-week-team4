@@ -1,15 +1,23 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Footer } from "./components/Footer";
-import MainSection from "./components/MainSection";
-import MyNavbar from "./components/MyNavbar";
+import HomeSection from "./components/HomeSection";
+import Profile from "./components/Profile";
 
 function App() {
   return (
-    <>
-      <MyNavbar />
-      <MainSection />
+    <BrowserRouter
+      future={{
+        v7_relativeSplatPath: true,
+        v7_startTransition: true
+      }}
+    >
+      <Routes>
+        <Route path="/" element={<HomeSection />} />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
       <Footer />
-    </>
+    </BrowserRouter>
   );
 }
 
