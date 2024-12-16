@@ -22,9 +22,9 @@ const AsideLeft = () => {
           height={100}
           className="rounded-circle ms-4"
         />
-        <h3 className="ps-4 m-0">Mario Rossi</h3>
-        <p className="ps-4 fw-semibold m-0">Architetto</p>
-        <p className="ps-4 mb-1">Torino, Piemonte</p>
+        <h3 className="ps-3 m-0">Mario Rossi</h3>
+        <p className="ps-3 fw-semibold m-0">Architetto</p>
+        <p className="ps-3 mb-1">Torino, Piemonte</p>
       </div>
       <div className="rounded-4 bg-white mt-2">
         <div className="d-flex mx-1">
