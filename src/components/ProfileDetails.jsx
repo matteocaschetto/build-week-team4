@@ -8,11 +8,13 @@ import Tabs from "react-bootstrap/Tabs";
 import { IoPencil } from "react-icons/io5";
 import { FiPlusCircle } from "react-icons/fi";
 import ModalToAddExperience from "./ModalToAddExperience";
+import { useDispatch } from "react-redux";
 
 const ProfileDetails = () => {
   const [profile, setProfile] = useState(null); // Stato per memorizzare i dati del profilo
   const [isLoading, setIsLoading] = useState(true); // Stato per la gestione del caricamento
   const [modalShow, setModalShow] = useState(false); // stato per gestione del modale
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // Funzione per recuperare il profilo
@@ -32,6 +34,7 @@ const ProfileDetails = () => {
         }
 
         const data = await response.json();
+        console.log(data);
         setProfile(data); // Salva i dati nel nostro stato
         setIsLoading(false); // Imposta loading a false quando i dati sono stati caricati
       } catch (error) {
@@ -53,22 +56,22 @@ const ProfileDetails = () => {
 
   return (
     <Container className="d-flex flex-column">
-      <div className="rounded-4 position-relative bg-white mt-4">
+      <div className="rounded-4 bg-white mt-4">
         <div>
           <img
             src="https://png.pngtree.com/background/20230419/original/pngtree-fluid-gradient-colorful-background-picture-image_2447892.jpg"
             alt="sfondo"
             className="rounded-top-4"
-            style={{ height: 200, width: "100%", objectFit: "cover" }}
+            style={{ height: 150, width: "100%", objectFit: "cover" }}
           />
         </div>
-        <img src={profile.image} alt="Profile" width={100} height={100} className="ms-4 mt-2 position-absolute start-0 rounded-circle" style={{top:"33%"}} />
+        <img src={profile.image} alt="Profile" width={100} height={100} className="ms-4 mt-2" />
         {/*il nome, il titolo e l'area dell'utente */}
-        <h3 className="ps-4 m-0 mt-5">
+        <h3 className="ps-4 m-0">
           {profile.name} {profile.surname}
         </h3>
         <p className="ps-4 fw-semibold m-0">{profile.title}</p>
-        <p className="ps-4 mb-1">Lazio-{profile.area}-Italia</p>
+        <p className="ps-4 mb-1">{profile.area}</p>
         <div className="d-flex gap-3 ms-3 mb-3">
           <Button variant="primary" className="rounded-pill">
             <RiSendPlaneFill />
@@ -140,7 +143,13 @@ const ProfileDetails = () => {
         <div className=" d-flex align-items-center fw-semibold">
           <p>Esperienze</p>
           <div className="ms-auto">
-            <Button variant="light" className="p-1 border-0 " onClick={() => setModalShow(true)}>
+            <Button
+              variant="light"
+              className="p-1 border-0 "
+              onClick={() => {
+                dispatch({ type: "ADD_PROFILE", payload: profile }), setModalShow(true);
+              }}
+            >
               <FiPlusCircle className="fs-4 me-2" />
             </Button>
             <ModalToAddExperience show={modalShow} onHide={() => setModalShow(false)} />
@@ -150,7 +159,7 @@ const ProfileDetails = () => {
         <div>
           <span>
             Architetto con esperienza nella progettazione e realizzazione di spazi innovativi e sostenibili. Mi occupo di progettazione architettonica,
-            pianificazione urbana e restauro, con un forte focus sulla funzionalità, l'estetica e l'efficienza energetica. Ho una solida esperienza nella
+            pianificazione urbana e restauro, con un forte focus sulla funzionalità, lestetica e l'efficienza energetica. Ho una solida esperienza nella
             gestione di progetti complessi, dalla fase di concept fino alla realizzazione, collaborando con team multidisciplinari per garantire il rispetto
             delle normative e delle tempistiche.
           </span>

@@ -1,8 +1,10 @@
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import Datetime from "react-datetime";
+import { useSelector } from "react-redux";
 
 const ModalToAddExperience = (props) => {
-  console.log();
+  const singleProfile = useSelector((state) => state.singleProfile);
+  console.log(singleProfile);
   return (
     <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
