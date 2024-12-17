@@ -53,22 +53,22 @@ const ProfileDetails = () => {
 
   return (
     <Container className="d-flex flex-column">
-      <div className="rounded-4 bg-white mt-4">
+      <div className="rounded-4 position-relative bg-white mt-4">
         <div>
           <img
             src="https://png.pngtree.com/background/20230419/original/pngtree-fluid-gradient-colorful-background-picture-image_2447892.jpg"
             alt="sfondo"
             className="rounded-top-4"
-            style={{ height: 150, width: "100%", objectFit: "cover" }}
+            style={{ height: 200, width: "100%", objectFit: "cover" }}
           />
         </div>
-        <img src={profile.image} alt="Profile" width={100} height={100} className="ms-4 mt-2" />
+        <img src={profile.image} alt="Profile" width={100} height={100} className="ms-4 mt-2 position-absolute start-0 rounded-circle" style={{top:"33%"}} />
         {/*il nome, il titolo e l'area dell'utente */}
-        <h3 className="ps-4 m-0">
+        <h3 className="ps-4 m-0 mt-5">
           {profile.name} {profile.surname}
         </h3>
         <p className="ps-4 fw-semibold m-0">{profile.title}</p>
-        <p className="ps-4 mb-1">{profile.area}</p>
+        <p className="ps-4 mb-1">Lazio-{profile.area}-Italia</p>
         <div className="d-flex gap-3 ms-3 mb-3">
           <Button variant="primary" className="rounded-pill">
             <RiSendPlaneFill />
