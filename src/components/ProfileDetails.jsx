@@ -147,7 +147,7 @@ const ProfileDetails = () => {
               variant="light"
               className="p-1 border-0 "
               onClick={() => {
-                dispatch({ type: "ADD_PROFILE", payload: profile }), setModalShow(true);
+                dispatch({ type: "ADD_PROFILE", payload: profile._id }), setModalShow(true);
               }}
             >
               <FiPlusCircle className="fs-4 me-2" />
@@ -159,9 +159,9 @@ const ProfileDetails = () => {
         <div>
           <span>
             Architetto con esperienza nella progettazione e realizzazione di spazi innovativi e sostenibili. Mi occupo di progettazione architettonica,
-            pianificazione urbana e restauro, con un forte focus sulla funzionalità, lestetica e l'efficienza energetica. Ho una solida esperienza nella
-            gestione di progetti complessi, dalla fase di concept fino alla realizzazione, collaborando con team multidisciplinari per garantire il rispetto
-            delle normative e delle tempistiche.
+            pianificazione urbana e restauro, con un forte focus sulla funzionalità, lestetica e lefficienza energetica. Ho una solida esperienza nella gestione
+            di progetti complessi, dalla fase di concept fino alla realizzazione, collaborando con team multidisciplinari per garantire il rispetto delle
+            normative e delle tempistiche.
           </span>
         </div>
       </div>
