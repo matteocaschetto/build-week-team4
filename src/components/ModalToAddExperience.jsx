@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 
 const ModalToAddExperience = (props) => {
   const [experience, setExperience] = useState({});
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const singleProfile = useSelector((state) => state.singleProfile);
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE";
@@ -27,17 +29,10 @@ const ModalToAddExperience = (props) => {
       .then((resp) => {
         if (resp.ok) {
           console.log("iniviata");
-          return (
-            <Alert variant="success">
-              <Alert.Heading>Hey, nice to see you</Alert.Heading>
-              <p>
-                Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing
-                within an alert works with this kind of content.
-              </p>
-              <hr />
-              <p className="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
-            </Alert>
-          );
+          setSuccessMessage("esperienza aggiunta");
+          setErrorMessage("");
+        } else {
+          setErrorMessage("errore");
         }
       })
       .catch((err) => {
@@ -51,7 +46,9 @@ const ModalToAddExperience = (props) => {
         <Modal.Title id="contained-modal-title-vcenter">Modal heading</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form onSubmit={() => createExperiences(e)}>
+        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+        {successMessage && <Alert variant="success">{successMessage}</Alert>}
+        <Form onSubmit={createExperiences}>
           <Form.Group as={Row} className="mb-3" controlId="Position">
             <Form.Label required column sm="2">
               Role
