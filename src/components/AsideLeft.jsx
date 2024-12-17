@@ -8,21 +8,16 @@ import { MdGroups2, MdEventNote } from "react-icons/md";
 const AsideLeft = () => {
   return (
     <Container className="d-flex flex-column">
-      <div className="rounded-4 bg-white mt-2">
+      <div className="rounded-4 bg-white mt-2 position-relative">
         <img
           src="https://png.pngtree.com/background/20230419/original/pngtree-fluid-gradient-colorful-background-picture-image_2447892.jpg"
           alt="sfondo"
           className="img-fluid rounded-top-4 "
           height={80}
         />
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxKQClJxfLRjnXNxZi2-6EwQlOgdOj_Sj1A&s"
-          alt=""
-          width={100}
-          height={100}
-          className="rounded-circle ms-4"
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxKQClJxfLRjnXNxZi2-6EwQlOgdOj_Sj1A&s"alt=""width={100} height={100} className="rounded-circle ms-4 position-absolute start-0" style={{top:"35%"}}
         />
-        <h3 className="ps-3 m-0">Mario Rossi</h3>
+        <h3 className="ps-3 mx-0 mb-0" style={{marginTop:"60px"}}>Mario Rossi</h3>
         <p className="ps-3 fw-semibold m-0">Architetto</p>
         <p className="ps-3 mb-1">Torino, Piemonte</p>
       </div>
