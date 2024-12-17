@@ -1,5 +1,5 @@
 const initialState = {
-  singleProfileId: {},
+  singleProfile: {},
   content: []
 };
 

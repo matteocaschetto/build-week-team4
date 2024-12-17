@@ -36,6 +36,7 @@ const ProfileDetails = () => {
         const data = await response.json();
         console.log(data);
         setProfile(data); // Salva i dati nel nostro stato
+        dispatch({ type: "ADD_PROFILE", payload: data });
         setIsLoading(false); // Imposta loading a false quando i dati sono stati caricati
       } catch (error) {
         console.error("Errore nel recupero del profilo:", error);
@@ -43,8 +44,30 @@ const ProfileDetails = () => {
       }
     };
 
-    fetchProfile(); // Chiamata per recuperare il profilo
+    fetchProfile();
+
+    // Chiamata per recuperare il profilo
   }, []); // Il hook viene eseguito solo una volta, al montaggio del componente
+  useEffect(() => {
+    const fetchComment = () => {
+      if (profile) {
+        console.log("CIAo");
+        const token =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE";
+        fetch(`https://striveschool-api.herokuapp.com/api/profile/${profile._id}/experiences`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }).then((res) => {
+          if (res.ok) {
+            return res.json();
+          }
+        });
+      }
+    };
+    fetchComment();
+  }, [profile]);
 
   if (isLoading) {
     return <div>Caricamento...</div>; // Mostra un messaggio di caricamento finché i dati non sono pronti
@@ -147,7 +170,7 @@ const ProfileDetails = () => {
               variant="light"
               className="p-1 border-0 "
               onClick={() => {
-                dispatch({ type: "ADD_PROFILE", payload: profile._id }), setModalShow(true);
+                setModalShow(true);
               }}
             >
               <FiPlusCircle className="fs-4 me-2" />

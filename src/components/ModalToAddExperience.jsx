@@ -6,12 +6,12 @@ const ModalToAddExperience = (props) => {
   const [experience, setExperience] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const singleProfile = useSelector((state) => state.singleProfile);
+  const singleProfile = useSelector((state) => state.singleProfile._id);
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE";
   const createExperiences = (e) => {
     e.preventDefault();
-    fetch(`https://striveschool-api.herokuapp.com/api/profile/:${singleProfile}/experiences`, {
+    fetch(`https://striveschool-api.herokuapp.com/api/profile/${singleProfile}/experiences`, {
       method: "POST",
       body: JSON.stringify({
         company: `${experience.company}`,
