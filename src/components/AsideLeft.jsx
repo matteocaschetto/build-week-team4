@@ -40,7 +40,7 @@ const AsideLeft = () => {
         </div>
       </div>
       <div className="p-3 rounded-4 bg-white mt-2">
-        <p className="text-secondary mb-1 fw-semi-bold fs-6">Acedi a strumenti e informaioni in esclusiva</p>
+        <p className="text-secondary mb-1 fw-semi-bold fs-6">Accedi a strumenti e informazioni in esclusiva</p>
         <div className="d-flex align-items-start">
           <img src="https://img.freepik.com/free-photo/yellow-wall-texture-with-scratches_1249-77.jpg?ga=GA1.1.276053004.1729677387&semt=ais_hybrid" width={20} height={20} alt="Premium image" />
           <p className="text-black fw-bolder my-0 fs-6 ms-2">Riattiva Premium con il 50% di sconto</p>
