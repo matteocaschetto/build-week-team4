@@ -2,6 +2,7 @@ import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import Datetime from "react-datetime";
 
 const ModalToAddExperience = (props) => {
+  console.log();
   return (
     <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
