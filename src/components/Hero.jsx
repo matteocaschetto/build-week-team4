@@ -32,19 +32,19 @@ const Hero = () => {
             />
           </InputGroup>
         </div>
-        <div className="d-flex mt-4 gap-4">
-          <p className="d-flex align-items-center gap-1">
-            <FaRegImage />
+        <div className="d-flex justify-content-around mt-4 gap-4">
+          <p className="d-flex align-items-center gap-1 fw-semibold">
+            <FaRegImage className="fs-4" />
             Contenuti Multimediali
           </p>
-          <p className="d-flex align-items-center gap-1">
+          <p className="d-flex align-items-center gap-1 fw-semibold">
             {" "}
-            <MdEventNote />
+            <MdEventNote className="fs-4" />
             Evento
           </p>
-          <p className="d-flex align-items-center gap-1">
+          <p className="d-flex align-items-center gap-1 fw-semibold">
             {" "}
-            <MdOutlineArticle /> Scrivi un articolo
+            <MdOutlineArticle className="fs-4" /> Scrivi un articolo
           </p>
         </div>
       </div>

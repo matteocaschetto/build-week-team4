@@ -53,9 +53,8 @@ function MyNavbar() {
                   style={{ width: "30px", height: "30px" }}
                 />
               </Dropdown.Toggle>
-
               <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Profilo</Dropdown.Item>
+                <Dropdown.Item href="/profile">Profilo</Dropdown.Item>
                 <Dropdown.Item href="#/action-2">Impostazioni</Dropdown.Item>
                 <Dropdown.Item href="#/action-3">Logout</Dropdown.Item>
               </Dropdown.Menu>
