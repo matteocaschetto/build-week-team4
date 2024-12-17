@@ -10,10 +10,10 @@ const HomeSection = () => {
       <MyNavbar />
       <Container>
         <Row>
-          <Col className="d-none d-md-block col-md-3">
+          <Col className="d-none d-md-block col-md-4 col-lg-3">
             <AsideLeft />
           </Col>
-          <Col className="col-12 col-md-6">
+          <Col className="col-12 col-md-8 col-lg-6">
             <Hero />
           </Col>
           <Col className="d-none d-lg-block col-lg-3">
