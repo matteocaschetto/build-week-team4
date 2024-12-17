@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import { FaRegImage } from "react-icons/fa";
 import { MdEventNote } from "react-icons/md";
 import { MdOutlineArticle } from "react-icons/md";
+import {BiWorld} from 'react-icons/bi'
 
 const Hero = () => {
   return (
@@ -32,27 +33,43 @@ const Hero = () => {
             />
           </InputGroup>
         </div>
-        <div className="d-flex mt-4 gap-4">
-          <p className="d-flex align-items-center gap-1">
-            <FaRegImage />
+        <div className="d-flex justify-content-around mt-4 gap-4">
+          <p className="d-flex align-items-center gap-1 fw-semibold">
+            <FaRegImage className="fs-4" />
             Contenuti Multimediali
           </p>
-          <p className="d-flex align-items-center gap-1">
+          <p className="d-flex align-items-center gap-1 fw-semibold">
             {" "}
-            <MdEventNote />
+            <MdEventNote className="fs-4" />
             Evento
           </p>
-          <p className="d-flex align-items-center gap-1">
+          <p className="d-flex align-items-center gap-1 fw-semibold">
             {" "}
-            <MdOutlineArticle /> Scrivi un articolo
+            <MdOutlineArticle className="fs-4" /> Scrivi un articolo
           </p>
         </div>
       </div>
       <hr />
       <div className="rounded-4 bg-white mt-2 p-3">
-        
+        <div className="d-flex align-items-start">
+          <div>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxKQClJxfLRjnXNxZi2-6EwQlOgdOj_Sj1A&s" width={60} height={60} className="rounded-circle me-2" alt="boh" />
+          </div>
+          <div className="d-flex flex-column">
+            <p className="text-secondary fs-6 my-0"><span className="text-black fs-5 fw-bold">Diego Fontana</span> *1</p>
+            <p className="text-secondary fs-6 my-0">Copywriter Docente Autore, Contattami per workshop e...</p>
+            <div className="d-flex align-items-center">
+               <p className="text-secondary fs-6 my-0">1 Giorno <span className="text-secondary">&#8226</span> Modificato <span className="text-secondary">&#8226</span></p><BiWorld className="ms-2 fs-4"/>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p className="fs-6 mt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis corrupti nostrum molestias. Ut incidunt commodi officia eos natus accusamus suscipit ab inventore aperiam dolor? Mollitia labore aut reprehenderit? Sequi, eaque.</p>
+        </div>
+        <div style={{width:"60%", height:"auto", marginInline:"auto"}}>
+          <img src="https://cdn.pixabay.com/photo/2022/10/17/10/41/river-7527311_640.jpg" width={"100%"} height={250} alt="" />
+        </div>
     </div>
-      
     </Container>
   );
 };
