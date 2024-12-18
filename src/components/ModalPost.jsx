@@ -40,16 +40,9 @@ export const ModalPost = (props) => {
   };
 
   return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
+    <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Modal heading
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Modal heading</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
@@ -63,9 +56,7 @@ export const ModalPost = (props) => {
                 placeholder="Di cosa vorresti parlare?"
                 required
                 value={experience.role}
-                onChange={(e) =>
-                  setExperience({ ...experience, role: e.target.value })
-                }
+                onChange={(e) => setExperience({ ...experience, role: e.target.value })}
               />
             </Col>
           </Form.Group>
@@ -79,9 +70,7 @@ export const ModalPost = (props) => {
                 placeholder="Company Name"
                 required
                 value={experience.company}
-                onChange={(e) =>
-                  setExperience({ ...experience, company: e.target.value })
-                }
+                onChange={(e) => setExperience({ ...experience, company: e.target.value })}
               />
             </Col>
           </Form.Group>
@@ -95,9 +84,7 @@ export const ModalPost = (props) => {
                 placeholder="Describe your duties"
                 required
                 value={experience.description}
-                onChange={(e) =>
-                  setExperience({ ...experience, description: e.target.value })
-                }
+                onChange={(e) => setExperience({ ...experience, description: e.target.value })}
               />
             </Col>
           </Form.Group>
@@ -111,9 +98,7 @@ export const ModalPost = (props) => {
                 placeholder="Area"
                 required
                 value={experience.area}
-                onChange={(e) =>
-                  setExperience({ ...experience, area: e.target.value })
-                }
+                onChange={(e) => setExperience({ ...experience, area: e.target.value })}
               />
             </Col>
           </Form.Group>

@@ -38,6 +38,7 @@ const ModalToAddExperience = (props) => {
         setSuccessMessage("Esperienza aggiunta con successo!");
         setErrorMessage("");
         dispatch({ type: "ADD_EXPERIENCES", payload: data });
+        setExperience({});
         props.onHide();
       })
       .catch((err) => {

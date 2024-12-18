@@ -33,6 +33,7 @@ const ProfileDetails = () => {
       .then((resp) => {
         if (resp.ok) {
           console.log("eleminita");
+          dispatch({ type: "REMOVE_EXPERIENCES", payload: exp._id });
         }
       })
       .catch((err) => console.log(err));
