@@ -10,13 +10,16 @@ import { FiPlusCircle } from "react-icons/fi";
 import ModalToAddExperience from "./ModalToAddExperience";
 import { useDispatch, useSelector } from "react-redux";
 import { ImCancelCircle } from "react-icons/im";
+import ModalEditExperience from "./ModalEditExperience";
 
 const ProfileDetails = () => {
   const [profile, setProfile] = useState(null); // Stato per memorizzare i dati del profilo
   const [isLoading, setIsLoading] = useState(true); // Stato per la gestione del caricamento
   const [modalShow, setModalShow] = useState(false); // stato per gestione del modale
+  const [modalEdit, setModalEdit] = useState(false);
   const [experiences, setExperiences] = useState([]);
   const allExperiences = useSelector((state) => state.experiences);
+
   console.log(allExperiences);
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE";
@@ -212,12 +215,22 @@ const ProfileDetails = () => {
                 <div className="d-flex justify-content-between align-items-baseline">
                   <p className="fw-bold">{exp.role}</p>
                   <div>
-                    <button onClick={() => deleteExperience(exp)} className="border-0 bg-white me-auto">
-                      <ImCancelCircle className="ms-2" />
-                    </button>
-                    <button className="border-0 bg-white me-auto">
-                      <IoPencil />
-                    </button>
+                    <div>
+                      <button onClick={() => deleteExperience(exp)} className="border-0 bg-white me-auto ">
+                        <ImCancelCircle className="ms-2" />
+                      </button>
+                    </div>
+                    <div>
+                      <button
+                        className="border-0 bg-white me-auto"
+                        onClick={() => {
+                          setModalEdit(true);
+                        }}
+                      >
+                        <IoPencil />
+                      </button>
+                      <ModalEditExperience details={exp} show={modalEdit} onHide={() => setModalEdit(false)} />
+                    </div>
                   </div>
                 </div>
                 <p>

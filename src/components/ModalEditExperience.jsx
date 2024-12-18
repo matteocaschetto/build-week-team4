@@ -1,19 +1,23 @@
 import { useState } from "react";
-import { Alert, Button, Col, Form, Modal, Row } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { Button, Col, Form, Modal, Row } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
-const ModalToAddExperience = (props) => {
-  const [experience, setExperience] = useState({});
-  //const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const singleProfile = useSelector((state) => state.singleProfile._id);
-  const dispatch = useDispatch();
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE";
-  const createExperiences = (e) => {
-    e.preventDefault();
-    fetch(`https://striveschool-api.herokuapp.com/api/profile/${singleProfile}/experiences`, {
-      method: "POST",
+const ModalEditExperience = (props) => {
+  //const singleProfile = useSelector((state) => state.singleProfile._id);
+  const [experience, setExperience] = useState({
+    company: props.details.company,
+    role: props.details.role,
+    description: props.details.description,
+    area: props.details.area,
+    startDate: "",
+    endDate: ""
+  });
+  //const token =
+  ("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE");
+
+  /*  const fetchEditExperience = () => {
+    fetch(`https://striveschool-api.herokuapp.com/api/profile/:${singleProfile}/experiences/:${props.details._id}`, {
+      method: "PUT",
       body: JSON.stringify({
         company: `${experience.company}`,
         role: `${experience.role}`,
@@ -26,36 +30,15 @@ const ModalToAddExperience = (props) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`
       }
-    })
-      .then((resp) => {
-        if (resp.ok) {
-          return resp.json();
-        } else {
-          throw new Error("Errore nell'aggiunta dell'esperienza");
-        }
-      })
-      .then((data) => {
-        //setSuccessMessage("Esperienza aggiunta con successo!");
-        setErrorMessage("");
-        dispatch({ type: "ADD_EXPERIENCES", payload: data });
-        setExperience({});
-        props.onHide();
-      })
-      .catch((err) => {
-        console.log(err);
-        setErrorMessage("Errore nell'aggiunta dell'esperienza");
-      });
-  };
-
+    });
+  }; */
   return (
     <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">Aggiungi una nuova esperienza</Modal.Title>
+      <Modal.Header>
+        <Modal.Title id="contained-modal-title-vcenter">Modifica una nuova esperienza</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-
-        <Form onSubmit={createExperiences}>
+        <Form>
           <Form.Group as={Row} className="mb-3" controlId="Position">
             <Form.Label required column sm="2">
               Role
@@ -131,9 +114,7 @@ const ModalToAddExperience = (props) => {
               </Form.Group>
             </Col>
           </Row>
-          <Button type="submit" variant="success">
-            AGGIUNGI
-          </Button>
+          <Button variant="warning">Modifica</Button>
         </Form>
       </Modal.Body>
       <Modal.Footer>
@@ -143,4 +124,4 @@ const ModalToAddExperience = (props) => {
   );
 };
 
-export default ModalToAddExperience;
+export default ModalEditExperience;
