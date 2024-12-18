@@ -4,7 +4,7 @@ import { BiQuestionMark, BiCopyright } from "react-icons/bi";
 export const Footer = () => {
   return (
     <>
-      <Container fluid>
+      <Container fluid style={{marginTop:"50px"}}>
         <Row className="mt-3">
           <Col className="col-12 col-lg-7">
             <Row>
