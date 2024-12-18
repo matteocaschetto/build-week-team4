@@ -161,3 +161,4 @@ export const ModalPost = (props) => {
     </Modal>
   );
 };
+export default ModalPost;
