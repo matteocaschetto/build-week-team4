@@ -9,11 +9,13 @@ import { IoPencil } from "react-icons/io5";
 import { FiPlusCircle } from "react-icons/fi";
 import ModalToAddExperience from "./ModalToAddExperience";
 import { useDispatch } from "react-redux";
+import { ImCancelCircle } from "react-icons/im";
 
 const ProfileDetails = () => {
   const [profile, setProfile] = useState(null); // Stato per memorizzare i dati del profilo
   const [isLoading, setIsLoading] = useState(true); // Stato per la gestione del caricamento
   const [modalShow, setModalShow] = useState(false); // stato per gestione del modale
+  const [experiences, setExperiences] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -45,9 +47,7 @@ const ProfileDetails = () => {
     };
 
     fetchProfile();
-
-    // Chiamata per recuperare il profilo
-  }, []); // Il hook viene eseguito solo una volta, al montaggio del componente
+  }, []);
   useEffect(() => {
     const fetchComment = () => {
       if (profile) {
@@ -59,11 +59,21 @@ const ProfileDetails = () => {
           headers: {
             Authorization: `Bearer ${token}`
           }
-        }).then((res) => {
-          if (res.ok) {
-            return res.json();
-          }
-        });
+        })
+          .then((res) => {
+            if (res.ok) {
+              return res.json();
+            } else {
+              throw new Error("Errore nel recupero delle esperienzed");
+            }
+          })
+          .then((arr) => {
+            console.log(arr);
+            setExperiences(arr);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     };
     fetchComment();
@@ -180,12 +190,28 @@ const ProfileDetails = () => {
           </div>
         </div>
         <div>
-          <span>
-            Architetto con esperienza nella progettazione e realizzazione di spazi innovativi e sostenibili. Mi occupo di progettazione architettonica,
-            pianificazione urbana e restauro, con un forte focus sulla funzionalità, lestetica e lefficienza energetica. Ho una solida esperienza nella gestione
-            di progetti complessi, dalla fase di concept fino alla realizzazione, collaborando con team multidisciplinari per garantire il rispetto delle
-            normative e delle tempistiche.
-          </span>
+          {experiences.length > 0 ? (
+            experiences.map((exp) => (
+              <div key={exp._id}>
+                <p className="fw-bold">
+                  {exp.role}{" "}
+                  <button className="border-0 bg-white me-auto">
+                    <ImCancelCircle className="ms-2" />
+                  </button>
+                </p>
+                <p>
+                  {exp.company} &raquo; <span className="fw-lighter">{exp.description}</span>
+                </p>
+                <p>
+                  Presente dal {exp.startDate.slice(0, 10)} fino a {exp.endDate.slice(0, 10)}
+                </p>
+              </div>
+            ))
+          ) : (
+            <div>
+              <p>Nessuna esperienza inserita</p>
+            </div>
+          )}
         </div>
       </div>
     </Container>
