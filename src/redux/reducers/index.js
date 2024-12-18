@@ -1,5 +1,6 @@
 const initialState = {
   singleProfile: {},
+  experiences: [],
   content: []
 };
 
@@ -10,6 +11,17 @@ const mainReducer = (state = initialState, action) => {
         ...state,
         singleProfile: action.payload
       };
+    case "ADD_EXPERIENCES":
+      return {
+        ...state,
+        experiences: [...state.experiences, action.payload]
+      };
+    case "SET_EXPERIENCES":
+      return {
+        ...state,
+        experiences: action.payload
+      };
+
     default:
       return state;
   }

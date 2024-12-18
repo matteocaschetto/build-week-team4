@@ -8,7 +8,7 @@ import Tabs from "react-bootstrap/Tabs";
 import { IoPencil } from "react-icons/io5";
 import { FiPlusCircle } from "react-icons/fi";
 import ModalToAddExperience from "./ModalToAddExperience";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ImCancelCircle } from "react-icons/im";
 
 const ProfileDetails = () => {
@@ -16,6 +16,8 @@ const ProfileDetails = () => {
   const [isLoading, setIsLoading] = useState(true); // Stato per la gestione del caricamento
   const [modalShow, setModalShow] = useState(false); // stato per gestione del modale
   const [experiences, setExperiences] = useState([]);
+  const allExperiences = useSelector((state) => state.experiences);
+  console.log(allExperiences);
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE";
   const dispatch = useDispatch();
@@ -91,7 +93,7 @@ const ProfileDetails = () => {
       }
     };
     fetchComment();
-  }, [profile]);
+  }, [profile, allExperiences]);
 
   if (isLoading) {
     return <div>Caricamento...</div>; // Mostra un messaggio di caricamento finché i dati non sono pronti
