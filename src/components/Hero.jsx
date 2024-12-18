@@ -8,15 +8,42 @@ import {
   BiArrowToRight,
   BiLike,
   BiHeart,
-  BiComment
+  BiComment,
+  BiXCircle
 } from "react-icons/bi";
 import { format } from "date-fns";
 import ModalPost from "./ModalPost";
+import { useSelector } from "react-redux";
 /* import Lexusvideo from "../assets/video/Lexusvideo.mp4"; */
 
 const Hero = () => {
   const [posts, setPosts] = useState([]);
   const [modalShow, setModalShow] = useState(false);
+  const createdPosts = useSelector((state) => state.post)
+  console.log("Post nuovo",createdPosts)
+  const [createdPost, setCreatePost] = useState([])
+  console.log(createdPost)
+
+  const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYyOTk0ODUzMDRhNzAwMTUxNDhiYTgiLCJpYXQiOjE3MzQ1MTUwMTYsImV4cCI6MTczNTcyNDYxNn0.RMek1AdjnaeoEAUxohHgGqf4WFC9h9PjmVjNENmavHQ";
+
+  console.log()
+  const deletePost = (post) =>{
+    fetch(`https://striveschool-api.herokuapp.com/api/posts/${post}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then((resp) => {
+      if (resp.ok) {
+        console.log("eleminita");
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
 
   useEffect(() => {
     const fetchMain = async () => {
@@ -38,9 +65,11 @@ const Hero = () => {
         }
 
         const data = await response.json();
+
         console.log(data);
 
-        setPosts(data.slice(1000, 1010));
+        setPosts(data.slice(1800,));
+        setCreatePost(createdPosts)
       } catch (error) {
         console.error("Errore nel recupero del profilo:", error);
       }
@@ -79,17 +108,17 @@ const Hero = () => {
         </div>
         <div className="d-flex justify-content-around mt-4 gap-4">
           <p className="d-flex align-items-center gap-1 fw-semibold">
-            <FaRegImage className="fs-4" />
+            <FaRegImage fill="#378FE9" className="fs-3" />
             Contenuti Multimediali
           </p>
           <p className="d-flex align-items-center gap-1 fw-semibold">
             {" "}
-            <MdEventNote className="fs-4" />
+            <MdEventNote fill="#C37D16" className="fs-3" />
             Evento
           </p>
           <p className="d-flex align-items-center gap-1 fw-semibold">
             {" "}
-            <MdOutlineArticle className="fs-4" /> Scrivi un articolo
+            <MdOutlineArticle className="fs-3" fill="#E06847" /> Scrivi un articolo
           </p>
         </div>
       </div>
@@ -190,11 +219,11 @@ const Hero = () => {
         );
         return (
           <>
-            <div className="rounded-4 bg-white mt-2 p-3" key={i}>
-              <div className="d-flex align-items-start">
+            <div className="rounded-4 bg-white mt-2 " key={i}>
+              <div className="d-flex align-items-start p-3">
                 <div>
                   <img
-                    src={post.image}
+                    src={post.user.image}
                     width={60}
                     height={60}
                     className="rounded-circle me-2"
@@ -215,15 +244,15 @@ const Hero = () => {
                 </div>
               </div>
               <div>
-                <p className="fs-6 mt-2">{post.text}</p>
+                <p className="fs-6 mt-2 ps-3">{post.text}</p>
               </div>
               <div
-                style={{ width: "60%", height: "auto", marginInline: "auto" }}
+                style={{ width: "100%", height: "auto", marginInline: "auto" }}
               >
-                <img src={post.user.image} width={"100%"} height={250} alt="" />
+                <img src={post.user.image} width={"100%"} height={350} alt="" />
               </div>
               <hr />
-              <div className="d-flex justify-content-around ">
+              <div className="d-flex justify-content-around pb-3 ">
                 <div className="d-flex align-items-center">
                   <BiLike className="fs-4"></BiLike>
                   <p className="fs-6 ms-2 my-0 fw-semibold">Like</p>
@@ -242,11 +271,18 @@ const Hero = () => {
                     <p className="fs-6 ms-2 my-0 fw-semibold">Comment</p>
                   </div>
                 </div>
+                <div className="d-flex align-items-center">
+                  <div className="d-flex align-items-center">
+                    <BiXCircle onClick={() => deletePost(post._id)} className="fs-4"></BiXCircle>
+                    <p className="fs-6 ms-2 my-0 fw-semibold">Delete Post</p>
+                  </div>
+                </div>
               </div>
             </div>
           </>
         );
       })}
+
 
       {/* <div className="rounded-4 bg-white mt-2">
         <div className="d-flex mt-2 p-3">

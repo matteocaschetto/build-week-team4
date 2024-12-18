@@ -1,24 +1,24 @@
 import { useState } from "react";
 import { Alert, Button, Col, Form, Modal, Row } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 
-export const ModalPost = (props) => {
-  const [experience, setExperience] = useState({});
+ const ModalPost = (props) => {
+  const [post, setPost] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const dispatch = useDispatch()
+
+  console.log(post)
 
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYyOTk0ODUzMDRhNzAwMTUxNDhiYTgiLCJpYXQiOjE3MzQ1MTUwMTYsImV4cCI6MTczNTcyNDYxNn0.RMek1AdjnaeoEAUxohHgGqf4WFC9h9PjmVjNENmavHQ";
-  const createExperiences = (e) => {
+  const createPost = (e) => {
     e.preventDefault();
     fetch(`https://striveschool-api.herokuapp.com/api/posts/`, {
       method: "POST",
       body: JSON.stringify({
-        company: `${experience.company}`,
-        role: `${experience.role}`,
-        description: `${experience.description}`,
-        area: `${experience.area}`,
-        startDate: `${experience.startDate}`,
-        endDate: `${experience.endDate}`
+        text: `${post.text}`,
+        URL :  `${post.URL}`
       }),
       headers: {
         "Content-Type": "application/json",
@@ -30,6 +30,8 @@ export const ModalPost = (props) => {
           console.log("iniviata");
           setSuccessMessage("esperienza aggiunta");
           setErrorMessage("");
+          dispatch({ type: "CREATE_POST", payload: resp });
+          console.log("PostFetch", resp)
         } else {
           setErrorMessage("errore");
         }
@@ -48,51 +50,50 @@ export const ModalPost = (props) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Modal heading
+          Crea un Nuovo Post!
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
         {successMessage && <Alert variant="success">{successMessage}</Alert>}
-        <Form onSubmit={createExperiences}>
+        <Form onSubmit={createPost}>
           <Form.Group as={Row} className="mb-3" controlId="Position">
-            <Form.Label required column sm="2"></Form.Label>
             <Col sm="12">
               <Form.Control
                 type="text"
                 placeholder="Di cosa vorresti parlare?"
                 required
-                value={experience.role}
+                value={post.text}
                 onChange={(e) =>
-                  setExperience({ ...experience, role: e.target.value })
+                  setPost({ ...post, text: e.target.value })
                 }
               />
-            </Col>
+           </Col>
           </Form.Group>
-          <Form.Group as={Row} className="mb-3" controlId="companyName">
+         <Form.Group as={Row} className="mb-3" controlId="companyName">
             <Form.Label column sm="2">
-              Company
+              Image URL
             </Form.Label>
             <Col sm="12">
               <Form.Control
                 type="text"
-                placeholder="Company Name"
+                placeholder="Inserisci qui l' URL dell' immagine che desideri visualizzare"
                 required
-                value={experience.company}
+                value={post.URL}
                 onChange={(e) =>
-                  setExperience({ ...experience, company: e.target.value })
+                  setPost({ ...post, URL: e.target.value })
                 }
               />
             </Col>
           </Form.Group>
-          <Form.Group as={Row} className="mb-3" controlId="description">
+           {/*<Form.Group as={Row} className="mb-3" controlId="description">
             <Form.Label column sm="2">
-              Description
+              Post Description
             </Form.Label>
             <Col sm="12">
               <Form.Control
                 type="text"
-                placeholder="Describe your duties"
+                placeholder="Inserisci la descrizione del tuo post"
                 required
                 value={experience.description}
                 onChange={(e) =>
@@ -149,14 +150,13 @@ export const ModalPost = (props) => {
                 />
               </Form.Group>
             </Col>
-          </Row>
-          <Button type="submit" variant="success">
-            AGGIUNGI
-          </Button>
+          </Row>*/}
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
+          <Button onClick={createPost} type="submit" variant="success">
+            Pubblica
+          </Button>
       </Modal.Footer>
     </Modal>
   );

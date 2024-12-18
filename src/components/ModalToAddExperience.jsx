@@ -3,6 +3,7 @@ import { Alert, Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 const ModalToAddExperience = (props) => {
+  console.log(props)
   const [experience, setExperience] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");

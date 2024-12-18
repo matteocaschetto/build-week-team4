@@ -108,15 +108,13 @@ export const AsideR = () => {
                     <div className="col d-flex flex-column ms-2">
                       <p className="m-0 fw-semibold" style={{ fontSize: "0.9rem" }}>{profile.name}</p>
                       <p className="m-0" style={{ fontSize: "0.8rem" }}>{profile.title}</p>
-                      <Button className="rounded-pill fw-semibold text-dark btn-outline-dark bg-transparent btn-sm" style={{ fontSize: "0.9rem", width:"130px"}}>
-                        <RiSendPlaneFill /> Messaggio
+                      <Button className="rounded-pill fw-semibold mt-2 text-dark btn-outline-dark bg-transparent btn-sm" style={{ fontSize: "0.9rem", width:"130px"}}>
+                        <RiSendPlaneFill className="me-2" /> Messaggio
                       </Button>
                       <hr style={{ width: "100%" }} />
+                      </div>
                     </div>
-                    </div>
-                    </div>
-                  
-                  
+                    </div> 
                 ))
               ) : (
                 <p>Nessuna persona trovata.</p>
@@ -139,7 +137,7 @@ export const AsideR = () => {
             <div className="px-3">
               <h4 className="fw-semibold my-2 fs-6">Persone che potresti conoscere</h4>
               {profiles.length > 0 ? (
-                profiles.slice(0, 7).map((profile) => (
+                profiles.slice(100,103).map((profile) => (
                   <div key={profile._id} >
                     <div className="col mx-auto d-flex align-items-middle mt-2">
                     <div className="d-flex justify-content-end">
@@ -154,12 +152,14 @@ export const AsideR = () => {
                     <div className="col d-flex flex-column ms-2">
                       <p className="m-0 fw-semibold" style={{ fontSize: "0.9rem" }}>{profile.name}</p>
                       <p className="m-0" style={{ fontSize: "0.8rem" }}>{profile.title}</p>
-                      <Button className="rounded-pill fw-semibold text-dark btn-outline-dark bg-transparent btn-sm" style={{ fontSize: "0.9rem", width:"130px" }}>
-                        <CgUserAdd /> Collegati
+                      <div className="mt-2">
+                        <Button className="rounded-pill fw-semibold text-dark btn-outline-dark bg-transparent btn-sm" style={{ fontSize: "0.9rem", width:"130px" }}>
+                        <CgUserAdd className="me-2 fs-5 fw-bold" /> Collegati
                       </Button>
-                      <hr style={{ width: "100%" }} />
+                      </div>
                     </div>
                   </div>
+                  <hr style={{ width: "100%" }} />
                   </div>
                 ))
               ) : (

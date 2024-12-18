@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button, Container } from "react-bootstrap";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { IoMdCheckmark } from "react-icons/io";
-import { BiDotsHorizontalRounded } from "react-icons/bi";
+import { BiDotsHorizontalRounded, BiPlusCircle } from "react-icons/bi";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { IoPencil } from "react-icons/io5";
@@ -89,7 +89,7 @@ const ProfileDetails = () => {
           })
           .catch((err) => {
             console.log(err);
-          });
+        });
       }
     };
     fetchComment();
@@ -106,24 +106,24 @@ const ProfileDetails = () => {
   return (
     <Container className="d-flex flex-column">
       <div className="rounded-4 bg-white mt-4">
-        <div>
+        <div className="position-relative">
           <img
             src="https://png.pngtree.com/background/20230419/original/pngtree-fluid-gradient-colorful-background-picture-image_2447892.jpg"
             alt="sfondo"
             className="rounded-top-4"
-            style={{ height: 150, width: "100%", objectFit: "cover" }}
+            style={{ height: 200, width: "100%", objectFit: "cover" }}
           />
         </div>
-        <img src={profile.image} alt="Profile" width={100} height={100} className="ms-4 mt-2" />
+        <img src={profile.image} style={{position:"absolute" ,top:"22%", start:"0", borderRadius:"50%"}} alt="Profile" width={100} height={100} className="ms-4 mt-2" />
         {/*il nome, il titolo e l'area dell'utente */}
-        <h3 className="ps-4 m-0">
+        <h3 className="ps-4 m-0" style={{paddingTop:"50px"}}>
           {profile.name} {profile.surname}
         </h3>
         <p className="ps-4 fw-semibold m-0">{profile.title}</p>
         <p className="ps-4 mb-1">{profile.area}</p>
         <div className="d-flex gap-3 ms-3 mb-3">
           <Button variant="primary" className="rounded-pill">
-            <RiSendPlaneFill />
+            <RiSendPlaneFill className="me-2" />
             Invia Messaggio
           </Button>
           <button className="rounded-pill btn btn-outline-primary">
