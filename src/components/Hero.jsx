@@ -1,19 +1,60 @@
+import { useEffect, useState } from "react";
 import { Button, Container } from "react-bootstrap";
-import InputGroup from "react-bootstrap/InputGroup";
-import Form from "react-bootstrap/Form";
 import { FaRegImage } from "react-icons/fa";
 import { MdEventNote } from "react-icons/md";
 import { MdOutlineArticle } from "react-icons/md";
-import { BiWorld, BiArrowToRight, BiLike, BiHeart, BiComment } from "react-icons/bi";
-import Lexusvideo from "../assets/video/Lexusvideo.mp4";
+import {
+  BiWorld,
+  BiArrowToRight,
+  BiLike,
+  BiHeart,
+  BiComment
+} from "react-icons/bi";
+import { format } from "date-fns";
+import ModalPost from "./ModalPost";
+/* import Lexusvideo from "../assets/video/Lexusvideo.mp4"; */
 
 const Hero = () => {
+  const [posts, setPosts] = useState([]);
+  const [modalShow, setModalShow] = useState(false);
+
+  useEffect(() => {
+    const fetchMain = async () => {
+      try {
+        const token =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYyOTk0ODUzMDRhNzAwMTUxNDhiYTgiLCJpYXQiOjE3MzQ1MTUwMTYsImV4cCI6MTczNTcyNDYxNn0.RMek1AdjnaeoEAUxohHgGqf4WFC9h9PjmVjNENmavHQ"; // Assicurati di inserire il token corretto
+        const response = await fetch(
+          "https://striveschool-api.herokuapp.com/api/posts/",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Errore nel recupero del profilo");
+        }
+
+        const data = await response.json();
+        console.log(data);
+
+        setPosts(data.slice(1000, 1010));
+      } catch (error) {
+        console.error("Errore nel recupero del profilo:", error);
+      }
+    };
+    fetchMain();
+  }, []);
   return (
     <Container className="d-flex flex-column">
       <div className="rounded-4 bg-white mt-2 p-3">
         <h3>La vita lavorativa dura in media 42 anni.</h3>
         <p>Investi nella tua crescita a lungo termine con Premium.</p>
-        <button className="rounded-4 bg-warning border border-none p-1 fw-semibold">Scegli Premium</button>
+        <button className="rounded-4 bg-warning border border-none p-1 fw-semibold">
+          Scegli Premium
+        </button>
       </div>
       <div className="rounded-4 bg-white mt-2 px-3 pt-3">
         <div className="d-flex">
@@ -24,9 +65,17 @@ const Hero = () => {
             height={60}
             className="rounded-circle"
           />
-          <InputGroup>
-            <Form.Control className="rounded-5" placeholder="Crea un post" aria-label="text" />
-          </InputGroup>
+          <Button
+            className="d-flex bg-light border-secondary text-black rounded-pill w-100 flex-grow justify-content-start align-items-center"
+            onClick={() => {
+              setModalShow(true);
+            }}
+          >
+            <span className="ps-2">
+              <strong>Crea un post</strong>
+            </span>
+          </Button>
+          <ModalPost show={modalShow} onHide={() => setModalShow(false)} />
         </div>
         <div className="d-flex justify-content-around mt-4 gap-4">
           <p className="d-flex align-items-center gap-1 fw-semibold">
@@ -59,12 +108,18 @@ const Hero = () => {
               />
               <div className="d-flex flex-column">
                 <p className="my-0 fs-5 fw-bold">Leonardo Ferrante-Carrante</p>
-                <p className="my-0 fs-6 text-secondary">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <p className="my-0 fs-6 text-secondary">Lorem ipsum dolor sit amet.</p>
+                <p className="my-0 fs-6 text-secondary">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </p>
+                <p className="my-0 fs-6 text-secondary">
+                  Lorem ipsum dolor sit amet.
+                </p>
               </div>
             </div>
             <div>
-              <Button className="text-primary btn-outline-primary rounded-pill px-4 bg-transparent">+ Segui</Button>
+              <Button className="text-primary btn-outline-primary rounded-pill px-4 bg-transparent">
+                + Segui
+              </Button>
             </div>
           </div>
           <hr />
@@ -79,12 +134,18 @@ const Hero = () => {
               />
               <div className="d-flex flex-column">
                 <p className="my-0 fs-5 fw-bold">Leonardo Ferrante-Carrante</p>
-                <p className="my-0 fs-6 text-secondary">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <p className="my-0 fs-6 text-secondary">Lorem ipsum dolor sit amet.</p>
+                <p className="my-0 fs-6 text-secondary">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </p>
+                <p className="my-0 fs-6 text-secondary">
+                  Lorem ipsum dolor sit amet.
+                </p>
               </div>
             </div>
             <div>
-              <Button className="text-primary btn-outline-primary rounded-pill px-4 bg-transparent">+ Segui</Button>
+              <Button className="text-primary btn-outline-primary rounded-pill px-4 bg-transparent">
+                + Segui
+              </Button>
             </div>
           </div>
           <hr />
@@ -99,12 +160,18 @@ const Hero = () => {
               />
               <div className="d-flex flex-column">
                 <p className="my-0 fs-5 fw-bold">Leonardo Ferrante-Carrante</p>
-                <p className="my-0 fs-6 text-secondary">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <p className="my-0 fs-6 text-secondary">Lorem ipsum dolor sit amet.</p>
+                <p className="my-0 fs-6 text-secondary">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </p>
+                <p className="my-0 fs-6 text-secondary">
+                  Lorem ipsum dolor sit amet.
+                </p>
               </div>
             </div>
             <div>
-              <Button className="text-primary btn-outline-primary rounded-pill px-4 bg-transparent">+ Segui</Button>
+              <Button className="text-primary btn-outline-primary rounded-pill px-4 bg-transparent">
+                + Segui
+              </Button>
             </div>
           </div>
           <hr />
@@ -114,41 +181,74 @@ const Hero = () => {
           </div>
         </div>
       </div>
-      <div className="rounded-4 bg-white mt-2 p-3">
-        <div className="d-flex align-items-start">
-          <div>
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxKQClJxfLRjnXNxZi2-6EwQlOgdOj_Sj1A&s"
-              width={60}
-              height={60}
-              className="rounded-circle me-2"
-              alt="boh"
-            />
-          </div>
-          <div className="d-flex flex-column">
-            <p className="text-secondary fs-6 my-0">
-              <span className="text-black fs-5 fw-bold">Diego Fontana</span> *1
-            </p>
-            <p className="text-secondary fs-6 my-0">Copywriter Docente Autore, Contattami per workshop e...</p>
-            <div className="d-flex align-items-center">
-              <p className="text-secondary fs-6 my-0">
-                1 Giorno, <span className="text-secondary"></span> Modificato <span className="text-secondary"></span>
-              </p>
-              <BiWorld className="ms-2 fs-4" />
+
+      {/*_______________________POST___________________________________________*/}
+      {posts.map((post, i) => {
+        const formattedDate = format(
+          new Date(post.user.createdAt),
+          "d MMMM yyyy"
+        );
+        return (
+          <>
+            <div className="rounded-4 bg-white mt-2 p-3" key={i}>
+              <div className="d-flex align-items-start">
+                <div>
+                  <img
+                    src={post.image}
+                    width={60}
+                    height={60}
+                    className="rounded-circle me-2"
+                    alt="not_found"
+                  />
+                </div>
+                <div className="d-flex flex-column">
+                  <p className="text-secondary fs-6 my-0">
+                    <span className="text-black fs-5 fw-bold">
+                      {post.user.name}_{post.user.surname}
+                    </span>
+                  </p>
+                  <p className="text-secondary fs-6 my-0">{post.user.title}</p>
+                  <div className="d-flex align-items-center">
+                    <p className="text-secondary fs-6 my-0">{formattedDate}</p>
+                    <BiWorld className="ms-2 fs-4" />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <p className="fs-6 mt-2">{post.text}</p>
+              </div>
+              <div
+                style={{ width: "60%", height: "auto", marginInline: "auto" }}
+              >
+                <img src={post.user.image} width={"100%"} height={250} alt="" />
+              </div>
+              <hr />
+              <div className="d-flex justify-content-around ">
+                <div className="d-flex align-items-center">
+                  <BiLike className="fs-4"></BiLike>
+                  <p className="fs-6 ms-2 my-0 fw-semibold">Like</p>
+                </div>
+                <div className="d-flex align-items-center">
+                  <div className="d-flex align-items-center">
+                    <BiHeart className="fs-4"></BiHeart>
+                    <p className="fs-6 ms-2 my-0 fw-semibold">
+                      Add to Favourites
+                    </p>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center">
+                  <div className="d-flex align-items-center">
+                    <BiComment className="fs-4"></BiComment>
+                    <p className="fs-6 ms-2 my-0 fw-semibold">Comment</p>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div>
-          <p className="fs-6 mt-2">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis corrupti nostrum molestias. Ut incidunt commodi officia eos natus accusamus
-            suscipit ab inventore aperiam dolor? Mollitia labore aut reprehenderit? Sequi, eaque.
-          </p>
-        </div>
-        <div style={{ width: "60%", height: "auto", marginInline: "auto" }}>
-          <img src="https://cdn.pixabay.com/photo/2022/10/17/10/41/river-7527311_640.jpg" width={"100%"} height={250} alt="" />
-        </div>
-      </div>
-      <div className="rounded-4 bg-white mt-2">
+          </>
+        );
+      })}
+
+      {/* <div className="rounded-4 bg-white mt-2">
         <div className="d-flex mt-2 p-3">
           <div>
             <img
@@ -193,8 +293,8 @@ const Hero = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="rounded-4 bg-white mt-2">
+      </div> */}
+      {/* <div className="rounded-4 bg-white mt-2">
         <div className="d-flex mt-2 p-3">
           <div>
             <img
@@ -242,7 +342,7 @@ const Hero = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </Container>
   );
 };
