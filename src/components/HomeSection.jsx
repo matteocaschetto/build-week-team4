@@ -2,7 +2,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import AsideLeft from "./AsideLeft";
 import Hero from "./Hero";
 import MyNavbar from "./MyNavbar";
-import { AsideR } from "./AsideRight";
+import { AsideHeroR } from "./AsideHeroR";
 
 const HomeSection = () => {
   return (
@@ -17,7 +17,7 @@ const HomeSection = () => {
             <Hero />
           </Col>
           <Col className="d-none d-lg-block col-lg-3">
-            <AsideR />
+            <AsideHeroR />
           </Col>
         </Row>
       </Container>
