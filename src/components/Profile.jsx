@@ -9,11 +9,11 @@ const Profile = () => {
       <MyNavbar />
       <Container>
         <Row>
-          <Col md={8}>
+          <Col md={9}>
             <ProfileDetails />
           </Col>
 
-          <Col className="d-none d-lg-block col-lg-4">
+          <Col className="d-none d-lg-block col-lg-3">
             <AsideR />
           </Col>
         </Row>

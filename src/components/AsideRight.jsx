@@ -1,9 +1,12 @@
 import { Button, Col, Row } from "react-bootstrap";
 import { BiPencil } from "react-icons/bi";
 import { useState, useEffect } from "react";
+import { RiSendPlaneFill } from "react-icons/ri";
+import { CgUserAdd } from "react-icons/cg";
 
 export const AsideR = () => {
   const [profiles, setProfiles] = useState([]);
+  const [otherProfiles, setOtherProfiles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -24,7 +27,8 @@ export const AsideR = () => {
         }
 
         const data = await response.json();
-        setProfiles(data.slice(0, 7)); // primi 7 profili
+        setProfiles(data); // Imposta tutti i profili ricevuti
+        setOtherProfiles(data.slice(7, 14)); // Seleziona i profili per "Altri profili per te"
       } catch (error) {
         setError(error.message);
       } finally {
@@ -64,7 +68,7 @@ export const AsideR = () => {
                 <a href="https://www.linkedin.com/in/me/" style={{ textDecoration: "none", color: "grey" }}>
                   www.linkedin.com/in/
                   <br />
-                  gabriele-cipolloni-827324272
+                  myprofile-827324272
                 </a>
               </div>
               <div className="d-flex d-lg-none d-xxl-flex" style={{ marginLeft: "auto" }}>
@@ -73,34 +77,46 @@ export const AsideR = () => {
               <hr />
             </div>
           </div>
+          <div >
+            <img
+              src="https://media.licdn.com/media/AAYQAgTPAAgAAQAAAAAAADVuOvKzTF-3RD6j-qFPqhubBQ.png"
+              className="my-3"
+              width={"100%"}
+              style={{ borderRadius: "10px" }}
+              alt="hiring"
+            />
+          </div>
 
-          {/* Sezione Persone che potresti conoscere */}
+          {/* Sezione Altri profili per te */}
           <div className="mt-2 bg-white py-2" style={{ borderRadius: "10px" }}>
             <div className="px-3">
-              <h4 className="fw-bold my-2">Persone che potresti conoscere</h4>
-              {profiles.length > 0 ? (
-                profiles.map((profile) => (
-                  <div key={profile._id} className="d-flex align-items-center mt-3">
-                    <div>
+              <h4 className="fw-semibold my-2 fs-6">Altri profili per te</h4>
+              {otherProfiles.length > 0 ? (
+                otherProfiles.map((profile) => (
+                  
+                  <div key={profile._id}>
+                    <div className="col mx-auto d-flex align-items-middle mt-2">
+                    <div className="d-flex justify-content-end">
                       <img
-                        src={profile.imageUrl}
+                        src={profile.image}
                         alt={profile.name}
-                        className="rounded-circle me-2"
-                        width={"50px"}
-                        height={"50px"}
+                        className="rounded-circle"
+                        width={"40px"}
+                        height={"40px"}
                       />
                     </div>
-                    <div className="d-flex flex-column">
-                      <p className="m-0 ">{profile.name}</p>
-                      <p className="m-0 ">{profile.title}</p> 
-                    </div>
-                    <div className="mt-2 mx-2 d-flex flex-column align-items-center ms-auto">
-                      <Button className="rounded-pill fw-bold text-black btn-outline-dark bg-transparent">
-                        Collegati
+                    <div className="col d-flex flex-column ms-2">
+                      <p className="m-0 fw-semibold" style={{ fontSize: "0.9rem" }}>{profile.name}</p>
+                      <p className="m-0" style={{ fontSize: "0.8rem" }}>{profile.title}</p>
+                      <Button className="rounded-pill fw-semibold text-dark btn-outline-dark bg-transparent btn-sm" style={{ fontSize: "0.9rem", width:"130px"}}>
+                        <RiSendPlaneFill /> Messaggio
                       </Button>
                       <hr style={{ width: "100%" }} />
                     </div>
-                  </div>
+                    </div>
+                    </div>
+                  
+                  
                 ))
               ) : (
                 <p>Nessuna persona trovata.</p>
@@ -108,15 +124,48 @@ export const AsideR = () => {
             </div>
           </div>
 
-          <div>
+          <div >
             <img
               src="https://media.licdn.com/media/AAYQAgTPAAgAAQAAAAAAADVuOvKzTF-3RD6j-qFPqhubBQ.png"
               className="my-3"
               width={"100%"}
-              height={"200px"}
               style={{ borderRadius: "10px" }}
-              alt="immagine grande"
+              alt="hiring"
             />
+          </div>
+
+          {/* Sezione Persone che potresti conoscere */}
+          <div className="mt-2 bg-white py-2" style={{ borderRadius: "10px" }}>
+            <div className="px-3">
+              <h4 className="fw-semibold my-2 fs-6">Persone che potresti conoscere</h4>
+              {profiles.length > 0 ? (
+                profiles.slice(0, 7).map((profile) => (
+                  <div key={profile._id} >
+                    <div className="col mx-auto d-flex align-items-middle mt-2">
+                    <div className="d-flex justify-content-end">
+                      <img
+                        src={profile.image}
+                        alt={profile.name}
+                        className="rounded-circle"
+                        width={"40px"}
+                        height={"40px"}
+                      />
+                    </div>
+                    <div className="col d-flex flex-column ms-2">
+                      <p className="m-0 fw-semibold" style={{ fontSize: "0.9rem" }}>{profile.name}</p>
+                      <p className="m-0" style={{ fontSize: "0.8rem" }}>{profile.title}</p>
+                      <Button className="rounded-pill fw-semibold text-dark btn-outline-dark bg-transparent btn-sm" style={{ fontSize: "0.9rem", width:"130px" }}>
+                        <CgUserAdd /> Collegati
+                      </Button>
+                      <hr style={{ width: "100%" }} />
+                    </div>
+                  </div>
+                  </div>
+                ))
+              ) : (
+                <p>Nessuna persona trovata.</p>
+              )}
+            </div>
           </div>
         </Col>
       </Row>
