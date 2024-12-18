@@ -8,7 +8,7 @@ import Tabs from "react-bootstrap/Tabs";
 import { IoPencil } from "react-icons/io5";
 import { FiPlusCircle } from "react-icons/fi";
 import ModalToAddExperience from "./ModalToAddExperience";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ImCancelCircle } from "react-icons/im";
 
 const ProfileDetails = () => {
@@ -16,14 +16,31 @@ const ProfileDetails = () => {
   const [isLoading, setIsLoading] = useState(true); // Stato per la gestione del caricamento
   const [modalShow, setModalShow] = useState(false); // stato per gestione del modale
   const [experiences, setExperiences] = useState([]);
+  const allExperiences = useSelector((state) => state.experiences);
+  console.log(allExperiences);
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE";
   const dispatch = useDispatch();
 
+  const deleteExperience = (exp) => {
+    fetch(`https://striveschool-api.herokuapp.com/api/profile/${profile._id}/experiences/${exp._id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then((resp) => {
+        if (resp.ok) {
+          console.log("eleminita");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
     // Funzione per recuperare il profilo
     const fetchProfile = async () => {
       try {
-        const token =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE"; // Assicurati di inserire il token corretto
         const response = await fetch("https://striveschool-api.herokuapp.com/api/profile/me", {
           method: "GET",
           headers: {
@@ -52,8 +69,7 @@ const ProfileDetails = () => {
     const fetchComment = () => {
       if (profile) {
         console.log("CIAo");
-        const token =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE";
+
         fetch(`https://striveschool-api.herokuapp.com/api/profile/${profile._id}/experiences`, {
           method: "GET",
           headers: {
@@ -77,7 +93,7 @@ const ProfileDetails = () => {
       }
     };
     fetchComment();
-  }, [profile]);
+  }, [profile, allExperiences]);
 
   if (isLoading) {
     return <div>Caricamento...</div>; // Mostra un messaggio di caricamento finché i dati non sono pronti
@@ -186,19 +202,23 @@ const ProfileDetails = () => {
               <FiPlusCircle className="fs-4 me-2" />
             </Button>
             <ModalToAddExperience show={modalShow} onHide={() => setModalShow(false)} />
-            <IoPencil />
           </div>
         </div>
         <div>
           {experiences.length > 0 ? (
             experiences.map((exp) => (
               <div key={exp._id}>
-                <p className="fw-bold">
-                  {exp.role}{" "}
-                  <button className="border-0 bg-white me-auto">
-                    <ImCancelCircle className="ms-2" />
-                  </button>
-                </p>
+                <div className="d-flex justify-content-between align-items-baseline">
+                  <p className="fw-bold">{exp.role}</p>
+                  <div>
+                    <button onClick={() => deleteExperience(exp)} className="border-0 bg-white me-auto">
+                      <ImCancelCircle className="ms-2" />
+                    </button>
+                    <button className="border-0 bg-white me-auto">
+                      <IoPencil />
+                    </button>
+                  </div>
+                </div>
                 <p>
                   {exp.company} &raquo; <span className="fw-lighter">{exp.description}</span>
                 </p>
