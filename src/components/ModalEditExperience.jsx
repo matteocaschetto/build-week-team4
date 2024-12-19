@@ -1,22 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const ModalEditExperience = (props) => {
-  //const singleProfile = useSelector((state) => state.singleProfile._id);
+  const dispatch = useDispatch();
   const [experience, setExperience] = useState({
-    company: props.details.company,
     role: props.details.role,
+    company: props.details.company,
     description: props.details.description,
     area: props.details.area,
-    startDate: "",
-    endDate: ""
+    startDate: props.details.startDate,
+    endDate: props.details.endDate,
+    id: props.details._id,
+    user: props.details.user
   });
-  //const token =
-  ("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE");
 
-  /*  const fetchEditExperience = () => {
-    fetch(`https://striveschool-api.herokuapp.com/api/profile/:${singleProfile}/experiences/:${props.details._id}`, {
+  // Quando il prop 'details' cambia, aggiorna lo stato locale dell'esperienza
+  useEffect(() => {
+    if (props.details) {
+      setExperience({
+        role: props.details.role,
+        company: props.details.company,
+        description: props.details.description,
+        area: props.details.area,
+        startDate: props.details.startDate,
+        endDate: props.details.endDate,
+        id: props.details._id,
+        user: props.details.user
+      });
+    }
+  }, [props.details]);
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE";
+
+  const fetchEditExperience = (e) => {
+    e.preventDefault();
+
+    fetch(`https://striveschool-api.herokuapp.com/api/profile/${experience.user}/experiences/${experience.id}`, {
       method: "PUT",
       body: JSON.stringify({
         company: `${experience.company}`,
@@ -30,15 +50,31 @@ const ModalEditExperience = (props) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`
       }
-    });
-  }; */
+    })
+      .then((resp) => {
+        if (resp.ok) {
+          return resp.json();
+        } else {
+          throw new Error("Errore nell'aggiunta dell'esperienza");
+        }
+      })
+      .then((res) => {
+        console.log(res);
+        dispatch({ type: "ADD_EXPERIENCES", payload: res });
+        setExperience({});
+        props.onHide();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header>
         <Modal.Title id="contained-modal-title-vcenter">Modifica una nuova esperienza</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form>
+        <Form onSubmit={fetchEditExperience}>
           <Form.Group as={Row} className="mb-3" controlId="Position">
             <Form.Label required column sm="2">
               Role
@@ -99,22 +135,19 @@ const ModalEditExperience = (props) => {
             <Col sm={6}>
               <Form.Group className="mb-3" controlId="description">
                 <Form.Label>Start Date</Form.Label>
-                <Form.Control
-                  type="date"
-                  required
-                  value={experience.startDate}
-                  onChange={(e) => setExperience({ ...experience, startDate: e.target.value.toString() })}
-                />
+                <Form.Control type="date" required />
               </Form.Group>
             </Col>
             <Col sm={6}>
               <Form.Group className="mb-3" controlId="description">
                 <Form.Label>End Date</Form.Label>
-                <Form.Control type="date" value={experience.endDate} onChange={(e) => setExperience({ ...experience, endDate: e.target.value.toString() })} />
+                <Form.Control type="date" />
               </Form.Group>
             </Col>
           </Row>
-          <Button variant="warning">Modifica</Button>
+          <Button type="subimit" variant="warning">
+            Modifica
+          </Button>
         </Form>
       </Modal.Body>
       <Modal.Footer>

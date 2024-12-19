@@ -18,6 +18,7 @@ const ProfileDetails = () => {
   const [modalShow, setModalShow] = useState(false); // stato per gestione del modale
   const [modalEdit, setModalEdit] = useState(false);
   const [experiences, setExperiences] = useState([]);
+  const [selectedExperience, setSelectedExperience] = useState({});
   const allExperiences = useSelector((state) => state.experiences);
 
   console.log(allExperiences);
@@ -225,11 +226,11 @@ const ProfileDetails = () => {
                         className="border-0 bg-white me-auto"
                         onClick={() => {
                           setModalEdit(true);
+                          setSelectedExperience(exp);
                         }}
                       >
                         <IoPencil />
                       </button>
-                      <ModalEditExperience details={exp} show={modalEdit} onHide={() => setModalEdit(false)} />
                     </div>
                   </div>
                 </div>
@@ -247,6 +248,7 @@ const ProfileDetails = () => {
             </div>
           )}
         </div>
+        <ModalEditExperience id={profile._id} show={modalEdit} onHide={() => setModalEdit(false)} details={selectedExperience} />
       </div>
     </Container>
   );
