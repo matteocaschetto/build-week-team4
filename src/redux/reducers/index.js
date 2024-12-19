@@ -21,13 +21,11 @@ const mainReducer = (state = initialState, action) => {
         ...state,
         experiences: state.experiences.filter((exp) => exp._id !== action.payload)
       };
-      case "CREATE_POST":
-        return{
-          ...state,
-          post: action.payload
-        }
-        
-        
+    case "CREATE_POST":
+      return {
+        ...state,
+        post: action.payload
+      };
 
     default:
       return state;

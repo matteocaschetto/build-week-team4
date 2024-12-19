@@ -28,7 +28,7 @@ const ModalPost = (props) => {
       .then((resp) => {
         if (resp.ok) {
           console.log("iniviata");
-          setSuccessMessage("esperienza aggiunta");
+          setSuccessMessage("post aggiunto");
           setErrorMessage("");
           dispatch({ type: "CREATE_POST", payload: resp });
           console.log("PostFetch", resp);

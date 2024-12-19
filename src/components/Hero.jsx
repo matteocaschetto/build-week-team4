@@ -13,6 +13,8 @@ const Hero = () => {
   const [modalShow, setModalShow] = useState(false);
   const [profileImage, setProfileImage] = useState(""); // stato per l'immagine del profilo
   const createdPosts = useSelector((state) => state.post);
+  const [updateFlag, setUpdateFlag] = useState(false);
+
   const [createdPost, setCreatePost] = useState([]);
 
   const token =
@@ -38,32 +40,26 @@ const Hero = () => {
       console.error("Errore nel recupero del profilo:", error);
     }
   };
-
-  useEffect(() => {
-    const fetchMain = async () => {
-      try {
-        const response = await fetch("https://striveschool-api.herokuapp.com/api/posts/", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error("Errore nel recupero dei post");
+  const fetchMain = async () => {
+    try {
+      const response = await fetch("https://striveschool-api.herokuapp.com/api/posts/", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
         }
+      });
 
-        const data = await response.json();
-        setPosts(data.slice(1800));
-        setCreatePost(createdPosts);
-      } catch (error) {
-        console.error("Errore nel recupero dei post:", error);
+      if (!response.ok) {
+        throw new Error("Errore nel recupero dei post");
       }
-    };
 
-    fetchMain();
-    fetchUserProfile(); // Chiamata per ottenere l'immagine del profilo
-  }, []);
+      const data = await response.json();
+      setPosts(data.slice(1800));
+      setCreatePost(createdPosts);
+    } catch (error) {
+      console.error("Errore nel recupero dei post:", error);
+    }
+  };
 
   // Funzione per eliminare il post
   const deletePost = (post) => {
@@ -77,10 +73,15 @@ const Hero = () => {
       .then((resp) => {
         if (resp.ok) {
           console.log("Post eliminato");
+          setUpdateFlag(!updateFlag);
         }
       })
       .catch((err) => console.log(err));
   };
+  useEffect(() => {
+    fetchMain();
+    fetchUserProfile(); // Chiamata per ottenere l'immagine del profilo
+  }, [updateFlag]);
 
   return (
     <Container className="d-flex flex-column">
