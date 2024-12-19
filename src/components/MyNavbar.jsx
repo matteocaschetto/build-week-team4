@@ -90,7 +90,7 @@ function MyNavbar() {
                   src={profileImage} 
                   alt="User"
                   className="rounded-circle"
-                  style={{ width: "30px", height: "30px" }}
+                  style={{ width: "30px", height: "30px", objectFit:"cover" }}
                 />
               </Dropdown.Toggle>
               <Dropdown.Menu>

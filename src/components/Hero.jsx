@@ -109,6 +109,7 @@ const Hero = () => {
             width={60}
             height={60}
             className="rounded-circle me-2"
+            style={{objectFit:"cover"}}
           />
           <Button
             className="d-flex bg-light border-secondary text-black rounded-pill w-100 flex-grow justify-content-start align-items-center"

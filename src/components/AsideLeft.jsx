@@ -51,7 +51,7 @@ const AsideLeft = () => {
           width={100}
           height={100}
           className="rounded-circle ms-4 position-absolute start-0"
-          style={{ top: "35%" }}
+          style={{ top: "35%", objectFit:"cover"}}
         />
         <h3 className="ps-3 mx-0 mb-0" style={{ marginTop: "60px" }}>
           {profile.name} {profile.surname} 

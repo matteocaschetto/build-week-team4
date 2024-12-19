@@ -19,7 +19,7 @@ const ProfileDetails = () => {
   const [experiences, setExperiences] = useState([]);
   const [imageFile, setImageFile] = useState(null);  // Stato per il file immagine
   const allExperiences = useSelector((state) => state.experiences);
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE";  // Usa un token valido
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE";
   const dispatch = useDispatch();
 
   const deleteExperience = (exp) => {
@@ -136,8 +136,8 @@ const ProfileDetails = () => {
           <img
             src={profile.image}
             alt="Profile"
-            style={{ top: "22%", left: "0", borderRadius: "50%" }}
-            width={100}
+            style={{ top: "22%", left: "0", borderRadius: "50%", objectFit:"cover" }}
+            width={100} 
             height={100}
             className="ms-4 mt-2"
           />
@@ -173,6 +173,7 @@ const ProfileDetails = () => {
             <h3 className="m-0">{profile.name} {profile.surname}</h3>
             <p>{profile.title}</p>
             <p>{profile.area}</p>
+            <p>{profile.email}</p>
           </div>
         </div>
 
