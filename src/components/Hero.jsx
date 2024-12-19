@@ -3,7 +3,7 @@ import { Button, Container } from "react-bootstrap";
 import { FaRegImage } from "react-icons/fa";
 import { MdEventNote } from "react-icons/md";
 import { MdOutlineArticle } from "react-icons/md";
-import { BiWorld, BiLike, BiHeart, BiComment, BiXCircle } from "react-icons/bi";
+import { BiWorld, BiLike, BiHeart, BiComment, BiXCircle, BiChevronDown } from "react-icons/bi";
 import { format } from "date-fns";
 import ModalPost from "./ModalPost";
 import { useSelector } from "react-redux";
@@ -54,7 +54,7 @@ const Hero = () => {
       }
 
       const data = await response.json();
-      setPosts(data.slice(1800));
+      setPosts(data.slice(1800,1810));
       setCreatePost(createdPosts);
     } catch (error) {
       console.error("Errore nel recupero dei post:", error);
@@ -122,10 +122,10 @@ const Hero = () => {
           </p>
         </div>
       </div>
-      
-
-      
-      <hr />
+      <div className="w-100 d-flex align-items-center">
+      <hr style={{width:"33%"}}/>
+      <p style={{fontSize:"0.7rem"}} className="text-secondary mb-0 ps-2">Seleziona la visualizzazione del feed: <span style={{fontSize:"0.8rem"}} className="fw-bolder text-black">Più rilevanti per primi</span><BiChevronDown className="fs-4 fw-bolder text-black mb-1"></BiChevronDown></p>
+      </div>
       <div className="rounded-4 bg-white mt-2 p-3">
         <h4 className="fs-6 fw-bold mb-4">Consigliati per te</h4>
         <div className="d-flex flex-column">
