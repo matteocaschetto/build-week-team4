@@ -3,13 +3,7 @@ import { Button, Container } from "react-bootstrap";
 import { FaRegImage } from "react-icons/fa";
 import { MdEventNote } from "react-icons/md";
 import { MdOutlineArticle } from "react-icons/md";
-import {
-  BiWorld,
-  BiLike,
-  BiHeart,
-  BiComment,
-  BiXCircle
-} from "react-icons/bi";
+import { BiWorld, BiLike, BiHeart, BiComment, BiXCircle } from "react-icons/bi";
 import { format } from "date-fns";
 import ModalPost from "./ModalPost";
 import { useSelector } from "react-redux";
@@ -51,25 +45,28 @@ const Hero = () => {
   useEffect(() => {
     const fetchMain = async () => {
       try {
-        const response = await fetch("https://striveschool-api.herokuapp.com/api/posts/", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`
+        const response = await fetch(
+          "https://striveschool-api.herokuapp.com/api/posts/",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
           }
-        });
+        );
 
         if (!response.ok) {
           throw new Error("Errore nel recupero dei post");
         }
 
         const data = await response.json();
-        setPosts(data.slice(1800,));
+        setPosts(data.slice(1800));
         setCreatePost(createdPosts);
       } catch (error) {
         console.error("Errore nel recupero dei post:", error);
       }
     };
-    
+
     fetchMain();
     fetchUserProfile(); // Chiamata per ottenere l'immagine del profilo
   }, []);
@@ -104,11 +101,12 @@ const Hero = () => {
         <div className="d-flex">
           {/* Usa l'immagine del profilo dinamica */}
           <img
-            src={profileImage} 
+            src={profileImage}
             alt="Profilo"
             width={60}
             height={60}
             className="rounded-circle me-2"
+            style={{ objectFit: "cover" }}
           />
           <Button
             className="d-flex bg-light border-secondary text-black rounded-pill w-100 flex-grow justify-content-start align-items-center"
@@ -134,7 +132,8 @@ const Hero = () => {
           </p>
           <p className="d-flex align-items-center gap-1 fw-semibold">
             {" "}
-            <MdOutlineArticle className="fs-3" fill="#E06847" /> Scrivi un articolo
+            <MdOutlineArticle className="fs-3" fill="#E06847" /> Scrivi un
+            articolo
           </p>
         </div>
       </div>
@@ -142,11 +141,10 @@ const Hero = () => {
       <div className="rounded-4 bg-white mt-2 p-3">
         <h4 className="fs-6 fw-bold mb-4">Consigliati per te</h4>
         <div className="d-flex flex-column">
-        
           <div className="d-flex align-items-center">
             <div className="d-flex me-4">
               <img
-                src="https://via.placeholder.com/40" 
+                src="https://via.placeholder.com/40"
                 alt=""
                 width={40}
                 height={40}
@@ -172,7 +170,10 @@ const Hero = () => {
 
       {/*_______________________POST___________________________________________*/}
       {posts.map((post, i) => {
-        const formattedDate = format(new Date(post.user.createdAt), "d MMMM yyyy");
+        const formattedDate = format(
+          new Date(post.user.createdAt),
+          "d MMMM yyyy"
+        );
         return (
           <div className="rounded-4 bg-white mt-2" key={i}>
             <div className="d-flex align-items-start p-3">
@@ -215,7 +216,9 @@ const Hero = () => {
               <div className="d-flex align-items-center">
                 <div className="d-flex align-items-center">
                   <BiHeart className="fs-4"></BiHeart>
-                  <p className="fs-6 ms-2 my-0 fw-semibold">Add to Favourites</p>
+                  <p className="fs-6 ms-2 my-0 fw-semibold">
+                    Add to Favourites
+                  </p>
                 </div>
               </div>
               <div className="d-flex align-items-center">
@@ -242,7 +245,8 @@ const Hero = () => {
 };
 
 export default Hero;
-      {/* <div className="rounded-4 bg-white mt-2">
+{
+  /* <div className="rounded-4 bg-white mt-2">
         <div className="d-flex mt-2 p-3">
           <div>
             <img
@@ -287,8 +291,10 @@ export default Hero;
             </div>
           </div>
         </div>
-      </div> */}
-      {/* <div className="rounded-4 bg-white mt-2">
+      </div> */
+}
+{
+  /* <div className="rounded-4 bg-white mt-2">
         <div className="d-flex mt-2 p-3">
           <div>
             <img
@@ -336,5 +342,5 @@ export default Hero;
             </div>
           </div>
         </div>
-      </div> */}
-
+      </div> */
+}
