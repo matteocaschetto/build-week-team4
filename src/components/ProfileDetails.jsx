@@ -11,7 +11,6 @@ import ModalToAddExperience from "./ModalToAddExperience";
 import { useDispatch, useSelector } from "react-redux";
 import { ImCancelCircle } from "react-icons/im";
 import ModalEditExperience from "./ModalEditExperience";
-import { IoIosAddCircle } from "react-icons/io";
 
 const ProfileDetails = () => {
   const [profile, setProfile] = useState(null); // Stato per memorizzare i dati del profilo
@@ -19,6 +18,7 @@ const ProfileDetails = () => {
   const [modalShow, setModalShow] = useState(false); // stato per gestione del modale
   const [modalEdit, setModalEdit] = useState(false);
   const [experiences, setExperiences] = useState([]);
+  const [selectedExperience, setSelectedExperience] = useState({});
   const [imageFile, setImageFile] = useState(null); // Stato per il file immagine
   const allExperiences = useSelector((state) => state.experiences);
   const token =
