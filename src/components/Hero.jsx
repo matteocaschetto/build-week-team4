@@ -81,7 +81,7 @@ const Hero = () => {
   useEffect(() => {
     fetchMain();
     fetchUserProfile(); // Chiamata per ottenere l'immagine del profilo
-  }, [updateFlag]);
+  }, [updateFlag, createdPosts]);
 
   return (
     <Container className="d-flex flex-column">
