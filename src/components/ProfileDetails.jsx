@@ -9,8 +9,8 @@ import { IoPencil } from "react-icons/io5";
 import { FiPlusCircle } from "react-icons/fi";
 import ModalToAddExperience from "./ModalToAddExperience";
 import { useDispatch, useSelector } from "react-redux";
-import { ImCancelCircle } from "react-icons/im";
-import ModalEditExperience from "./ModalEditExperience";
+import { IoIosAddCircle } from "react-icons/io";
+import { Trash } from "react-bootstrap-icons";
 
 const ProfileDetails = () => {
   const [profile, setProfile] = useState(null); // Stato per memorizzare i dati del profilo
@@ -26,13 +26,16 @@ const ProfileDetails = () => {
   const dispatch = useDispatch();
 
   const deleteExperience = (exp) => {
-    fetch(`https://striveschool-api.herokuapp.com/api/profile/${profile._id}/experiences/${exp._id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
+    fetch(
+      `https://striveschool-api.herokuapp.com/api/profile/${profile._id}/experiences/${exp._id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        }
       }
-    })
+    )
       .then((resp) => {
         if (resp.ok) {
           console.log("eleminita");
@@ -46,12 +49,15 @@ const ProfileDetails = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await fetch("https://striveschool-api.herokuapp.com/api/profile/me", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`
+        const response = await fetch(
+          "https://striveschool-api.herokuapp.com/api/profile/me",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
           }
-        });
+        );
 
         if (!response.ok) {
           throw new Error("Error fetching profile");
@@ -72,13 +78,18 @@ const ProfileDetails = () => {
 
   useEffect(() => {
     if (profile) {
-      fetch(`https://striveschool-api.herokuapp.com/api/profile/${profile._id}/experiences`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`
+      fetch(
+        `https://striveschool-api.herokuapp.com/api/profile/${profile._id}/experiences`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         }
-      })
-        .then((res) => (res.ok ? res.json() : Promise.reject("Error fetching experiences")))
+      )
+        .then((res) =>
+          res.ok ? res.json() : Promise.reject("Error fetching experiences")
+        )
         .then((arr) => setExperiences(arr))
         .catch((err) => console.log(err));
     }
@@ -98,13 +109,16 @@ const ProfileDetails = () => {
     formData.append("profile", imageFile); // Aggiungi il file al formData
 
     try {
-      const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${profile._id}/picture`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-        body: formData // Invia i dati del modulo contenenti l'immagine
-      });
+      const response = await fetch(
+        `https://striveschool-api.herokuapp.com/api/profile/${profile._id}/picture`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          body: formData // Invia i dati del modulo contenenti l'immagine
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Error uploading image");
@@ -129,7 +143,7 @@ const ProfileDetails = () => {
   return (
     <Container className="d-flex flex-column">
       <div className="rounded-4 bg-white mt-4">
-        <div className="position-relative">
+        <div className="">
           <img
             src="https://png.pngtree.com/background/20230419/original/pngtree-fluid-gradient-colorful-background-picture-image_2447892.jpg"
             alt="sfondo"
@@ -137,23 +151,47 @@ const ProfileDetails = () => {
             style={{ height: 200, width: "100%", objectFit: "cover" }}
           />
         </div>
-        <div className="d-flex align-items-center ps-4 mt-2">
+        <div className="d-flex align-items-center ps-4 mt-2 position-relative">
           <img
             src={profile.image}
             alt="Profile"
-            style={{ top: "22%", left: "0", borderRadius: "50%", objectFit: "cover" }}
+            style={{
+              top: "0%",
+              left: "6%",
+              borderRadius: "50%",
+              objectFit: "cover",
+              position: "absolute",
+              transform: "translate(-50%, -50%)",
+              zIndex: 1
+            }}
             width={100}
             height={100}
-            className="ms-4 mt-2"
+            className="ms-4 "
           />
 
           {/* Pulsanti di modifica immagine */}
-          <div className=" d-flex gap-2 ms-auto">
-            <Button variant="secondary" onClick={() => document.getElementById("profile-image-input").click()} className="mb-2 rounded-circle btn btn-sm">
+          <div className="d-flex gap-2 ms-auto align-items-center position-relative">
+            <Button
+              variant="primary"
+              onClick={() =>
+                document.getElementById("profile-image-input").click()
+              }
+              className="rounded-circle btn btn-sm"
+            >
               <IoIosAddCircle />
             </Button>
-            <input type="file" id="profile-image-input" accept="image/*" onChange={handleImageChange} style={{ display: "none" }} />
-            <Button variant="secondary" className="btn btn-sm rounded-pill me-2" onClick={handleImageUpload}>
+            <input
+              type="file"
+              id="profile-image-input"
+              accept="image/*"
+              onChange={handleImageChange}
+              style={{ display: "none" }}
+            />
+            <Button
+              variant="primary"
+              className="btn btn-sm rounded-pill me-2"
+              onClick={handleImageUpload}
+            >
               Update Profile Picture
             </Button>
           </div>
@@ -184,7 +222,11 @@ const ProfileDetails = () => {
           </button>
         </div>
         <div className="border border-top">
-          <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3">
+          <Tabs
+            defaultActiveKey="profile"
+            id="uncontrolled-tab-example"
+            className="mb-3"
+          >
             <Tab eventKey="home" title="Home"></Tab>
             <Tab eventKey="profile" title="Profile"></Tab>
             <Tab eventKey="post" title="Post"></Tab>
@@ -208,7 +250,10 @@ const ProfileDetails = () => {
         <div className=" d-flex align-items-center fw-semibold mb-2">
           <p>Attività</p>
           <div className="d-flex gap-2 ms-auto">
-            <Button className="border-primary rounded-pill text-primary bg-white px-3" size="sm">
+            <Button
+              className="border-primary rounded-pill text-primary bg-white px-3"
+              size="sm"
+            >
               Crea un post
             </Button>
             <p>
@@ -218,10 +263,16 @@ const ProfileDetails = () => {
         </div>
         <div>
           <span className="d-flex gap-2">
-            <Button className="border-secondary rounded-pill text-secondary bg-white px-3" size="sm">
+            <Button
+              className="border-secondary rounded-pill text-secondary bg-white px-3"
+              size="sm"
+            >
               Post
             </Button>
-            <Button className="border-secondary rounded-pill text-secondary bg-white px-3" size="sm">
+            <Button
+              className="border-secondary rounded-pill text-secondary bg-white px-3"
+              size="sm"
+            >
               Documenti
             </Button>
           </span>
@@ -232,25 +283,30 @@ const ProfileDetails = () => {
             alt="work-experience"
           />
           <div>
-            <p className="fw-semibold mb-0">Attestato corso HTML e CSS competenze base</p>
+            <p className="fw-semibold mb-0">
+              Attestato corso HTML e CSS competenze base
+            </p>
             <p>1 pagina</p>
           </div>
         </div>
       </div>
       <div className="rounded-4 bg-white mt-2 p-3">
-        <div className=" d-flex align-items-center fw-semibold">
+        <div className=" d-flex align-items-center fw-semibold mb-4">
           <p>Esperienze</p>
           <div className="ms-auto">
             <Button
               variant="light"
-              className="p-1 border-0 "
+              className="p-1 border-0 text-secondary bg-transparent"
               onClick={() => {
                 setModalShow(true);
               }}
             >
-              <FiPlusCircle className="fs-4 me-2" />
+              <FiPlusCircle className="fs-2" />
             </Button>
-            <ModalToAddExperience show={modalShow} onHide={() => setModalShow(false)} />
+            <ModalToAddExperience
+              show={modalShow}
+              onHide={() => setModalShow(false)}
+            />
           </div>
         </div>
         <div>
@@ -260,29 +316,24 @@ const ProfileDetails = () => {
                 <div className="d-flex justify-content-between align-items-baseline">
                   <p className="fw-bold">{exp.role}</p>
                   <div>
-                    <div>
-                      <button onClick={() => deleteExperience(exp)} className="border-0 bg-white me-auto ">
-                        <ImCancelCircle className="ms-2" />
-                      </button>
-                    </div>
-                    <div>
-                      <button
-                        className="border-0 bg-white me-auto"
-                        onClick={() => {
-                          setModalEdit(true);
-                          setSelectedExperience(exp);
-                        }}
-                      >
-                        <IoPencil />
-                      </button>
-                    </div>
+                    <button
+                      onClick={() => deleteExperience(exp)}
+                      className="border-0 bg-transparent me-auto"
+                    >
+                      <Trash className="ms-2 text-danger" />
+                    </button>
+                    <button className="border-0 bg-transparent ms-2 me-auto">
+                      <IoPencil />
+                    </button>
                   </div>
                 </div>
                 <p>
-                  {exp.company} &raquo; <span className="fw-lighter">{exp.description}</span>
+                  {exp.company} &raquo;{" "}
+                  <span className="fw-lighter">{exp.description}</span>
                 </p>
                 <p>
-                  Presente dal {exp.startDate.slice(0, 10)} fino a {exp.endDate.slice(0, 10)}
+                  Presente dal {exp.startDate.slice(0, 10)} fino a{" "}
+                  {exp.endDate.slice(0, 10)}
                 </p>
               </div>
             ))
@@ -292,7 +343,12 @@ const ProfileDetails = () => {
             </div>
           )}
         </div>
-        <ModalEditExperience id={profile._id} show={modalEdit} onHide={() => setModalEdit(false)} details={selectedExperience} />
+        <ModalEditExperience
+          id={profile._id}
+          show={modalEdit}
+          onHide={() => setModalEdit(false)}
+          details={selectedExperience}
+        />
       </div>
     </Container>
   );
