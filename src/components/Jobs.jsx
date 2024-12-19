@@ -194,19 +194,19 @@ useEffect (() =>{
         </Col>
         <Col className="d-none d-lg-block col-lg-3">
         <div className="w-100 bg-transparent text-center mt-3">
-            <Row className="d-flex align-items-center justify-content-end">
-                <Col className="px-0 col-6"><a className="text-secondary" style={{textDecoration:"none", fontSize:"0.7rem"}} href="">Informazioni</a></Col>
-                <Col className="px-0 col-6"><a className="text-secondary" style={{textDecoration:"none", fontSize:"0.7rem"}} href="">Accessibilità</a></Col>
-                <Col className="px-0 col-6"><a className="text-secondary" style={{textDecoration:"none", fontSize:"0.7rem"}} href="">Centro assistenza</a></Col>
-                <Col className="px-0 col-6"><a className="text-secondary" style={{textDecoration:"none", fontSize:"0.7rem"}} href="">Privacy e Condizioni</a></Col>
-                <Col className="px-0 col-12 my-2"><a className="text-secondary" style={{textDecoration:"none", fontSize:"0.7rem"}} href="">Opzioni per gli annunci pubblicitari</a></Col>
-                <Col className="px-0 col-6"><a className="text-secondary" style={{textDecoration:"none", fontSize:"0.7rem"}} href="">Pubblicità</a></Col>
-                <Col className="px-0 col-6"><a className="text-secondary" style={{textDecoration:"none", fontSize:"0.7rem"}} href="">Servizi alle aziende</a></Col>
-                <Col className="px-0 col-6"><a className="text-secondary" style={{textDecoration:"none", fontSize:"0.7rem"}} href="">Scarica l app LinkedIn</a></Col>
-                <Col className="px-0 col-6"><a className="text-secondary" style={{textDecoration:"none", fontSize:"0.7rem"}} href="">Altro</a></Col>
-                <Col className="px-0 col-12 mt-3 vertical-align-middle"><a className="text-secondary" style={{textDecoration:"none", fontSize:"0.7rem"}} href=""><span className="fw-bolder fs-6" style={{color:"blue", verticalAlign:"middle"}}>Linked</span><BiLogoLinkedinSquare fill="blue" className="fs-3"></BiLogoLinkedinSquare> LinkedIn Corporation <BiCopyright></BiCopyright> 2024 </a></Col>
-            </Row>
-        </div>        
+             <Row className="d-flex align-items-center justify-content-end pe-3">
+                <Col style={{margin:"2px 0"}} className="px-0 col-6 d-flex justify-content-end "><a className="text-secondary" style={{textDecoration:"none", fontSize:"0.7rem"}} href="">Informazioni</a></Col>
+                <Col style={{margin:"2px 0"}} className="px-0 col-6 d-flex justify-content-start ps-3"><a className="text-secondary" style={{textDecoration:"none", fontSize:"0.7rem"}} href="">Accessibilità</a></Col>
+                <Col className="px-0 col-6 d-flex justify-content-end pe-3"><a className="text-secondary" style={{textDecoration:"none", fontSize:"0.7rem"}} href="">Centro assistenza</a></Col>
+                <Col className="px-0 col-6 d-flex justify-content-start"><a className="text-secondary" style={{textDecoration:"none", fontSize:"0.7rem"}} href="">Privacy e Condizioni</a></Col>
+                <Col style={{margin:"2px 0"}} className="px-0 col-12"><a className="text-secondary" style={{textDecoration:"none", fontSize:"0.7rem"}} href="">Opzioni per gli annunci pubblicitari</a></Col>
+                <Col style={{margin:"2px 0"}} className="px-0 col-5 d-flex justify-content-end pe-3"><a className="text-secondary" style={{textDecoration:"none", fontSize:"0.7rem"}} href="">Pubblicità</a></Col>
+                <Col style={{margin:"2px 0"}} className="px-0 col-7 d-flex justify-content-start"><a className="text-secondary" style={{textDecoration:"none", fontSize:"0.7rem"}} href="">Servizi alle aziende</a></Col>
+                <Col style={{margin:"2px 0"}} className="px-0 col-8 d-flex justify-content-end pe-3"><a className="text-secondary" style={{textDecoration:"none", fontSize:"0.7rem"}} href="">Scarica l app LinkedIn</a></Col>
+                <Col style={{margin:"2px 0"}} className="px-0 col-4 d-flex justify-content-start"><a className="text-secondary" style={{textDecoration:"none", fontSize:"0.7rem"}} href="">Altro</a></Col>
+                <Col style={{margin:"2px 0"}} className="px-0 col-12 mt-2 vertical-align-middle"><a className="text-secondary" style={{textDecoration:"none", fontSize:"0.7rem"}} href=""><span className="fw-bolder fs-6" style={{color:"blue", verticalAlign:"middle"}}>Linked</span><BiLogoLinkedinSquare fill="blue" className="fs-3"></BiLogoLinkedinSquare> LinkedIn Corporation <BiCopyright></BiCopyright> 2024 </a></Col>
+             </Row>
+          </div>
         </Col>
       </Row>
      </Container>

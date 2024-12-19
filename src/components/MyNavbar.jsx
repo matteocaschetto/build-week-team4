@@ -71,7 +71,7 @@ function MyNavbar() {
 
             <Nav.Link href="#action" className="fs-6 me-2 text-center">
               <BsSuitcaseLgFill />
-              <div className="fs-6"><Link to={"/jobs"} style={{textDecoration:"none"}} className="text-secondary">Lavoro</Link></div>
+              <div className="fs-6"><Link to={"/jobs"} style={{textDecoration:"none"}} className="text-secondary fw-semibold">Lavoro</Link></div>
             </Nav.Link>
 
             <Nav.Link href="#action" className="fs-6 me-2 text-center">
