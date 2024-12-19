@@ -1,13 +1,12 @@
 import { Col, Container, Row } from "react-bootstrap";
 import AsideLeft from "./AsideLeft";
 import Hero from "./Hero";
-import MyNavbar from "./MyNavbar";
+//import MyNavbar from "./MyNavbar";
 import { AsideHeroR } from "./AsideHeroR";
 
 const HomeSection = () => {
   return (
     <>
-      <MyNavbar />
       <Container>
         <Row>
           <Col className="d-none d-md-block col-md-4 col-lg-3">

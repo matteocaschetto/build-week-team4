@@ -1,12 +1,11 @@
 import { Col, Container, Row } from "react-bootstrap";
 import ProfileDetails from "./ProfileDetails";
 import { AsideR } from "./AsideRight";
-import MyNavbar from "./MyNavbar";
+//import MyNavbar from "./MyNavbar";
 
 const Profile = () => {
   return (
     <>
-      <MyNavbar />
       <Container>
         <Row>
           <Col md={9}>
