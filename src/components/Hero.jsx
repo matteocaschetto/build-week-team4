@@ -3,13 +3,7 @@ import { Button, Container } from "react-bootstrap";
 import { FaRegImage } from "react-icons/fa";
 import { MdEventNote } from "react-icons/md";
 import { MdOutlineArticle } from "react-icons/md";
-import {
-  BiWorld,
-  BiLike,
-  BiHeart,
-  BiComment,
-  BiXCircle
-} from "react-icons/bi";
+import { BiWorld, BiLike, BiHeart, BiComment, BiXCircle } from "react-icons/bi";
 import { format } from "date-fns";
 import ModalPost from "./ModalPost";
 import { useSelector } from "react-redux";
@@ -19,6 +13,8 @@ const Hero = () => {
   const [modalShow, setModalShow] = useState(false);
   const [profileImage, setProfileImage] = useState(""); // stato per l'immagine del profilo
   const createdPosts = useSelector((state) => state.post);
+  const [updateFlag, setUpdateFlag] = useState(false);
+
   const [createdPost, setCreatePost] = useState([]);
 
   const token =
@@ -27,15 +23,12 @@ const Hero = () => {
   // Funzione per ottenere il profilo dell'utente e la sua immagine
   const fetchUserProfile = async () => {
     try {
-      const response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/profile/me",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const response = await fetch("https://striveschool-api.herokuapp.com/api/profile/me", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      );
+      });
 
       if (!response.ok) {
         throw new Error("Errore nel recupero del profilo");
@@ -47,32 +40,26 @@ const Hero = () => {
       console.error("Errore nel recupero del profilo:", error);
     }
   };
-
-  useEffect(() => {
-    const fetchMain = async () => {
-      try {
-        const response = await fetch("https://striveschool-api.herokuapp.com/api/posts/", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error("Errore nel recupero dei post");
+  const fetchMain = async () => {
+    try {
+      const response = await fetch("https://striveschool-api.herokuapp.com/api/posts/", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
         }
+      });
 
-        const data = await response.json();
-        setPosts(data.slice(1800,));
-        setCreatePost(createdPosts);
-      } catch (error) {
-        console.error("Errore nel recupero dei post:", error);
+      if (!response.ok) {
+        throw new Error("Errore nel recupero dei post");
       }
-    };
-    
-    fetchMain();
-    fetchUserProfile(); // Chiamata per ottenere l'immagine del profilo
-  }, []);
+
+      const data = await response.json();
+      setPosts(data.slice(1800));
+      setCreatePost(createdPosts);
+    } catch (error) {
+      console.error("Errore nel recupero dei post:", error);
+    }
+  };
 
   // Funzione per eliminare il post
   const deletePost = (post) => {
@@ -86,30 +73,27 @@ const Hero = () => {
       .then((resp) => {
         if (resp.ok) {
           console.log("Post eliminato");
+          setUpdateFlag(!updateFlag);
         }
       })
       .catch((err) => console.log(err));
   };
+  useEffect(() => {
+    fetchMain();
+    fetchUserProfile(); // Chiamata per ottenere l'immagine del profilo
+  }, [updateFlag, createdPosts]);
 
   return (
     <Container className="d-flex flex-column">
       <div className="rounded-4 bg-white mt-2 p-3">
         <h3>La vita lavorativa dura in media 42 anni.</h3>
         <p>Investi nella tua crescita a lungo termine con Premium.</p>
-        <button className="rounded-4 bg-warning border border-none p-1 fw-semibold">
-          Scegli Premium
-        </button>
+        <button className="rounded-4 bg-warning border border-none p-1 fw-semibold">Scegli Premium</button>
       </div>
       <div className="rounded-4 bg-white mt-2 px-3 pt-3">
         <div className="d-flex">
           {/* Usa l'immagine del profilo dinamica */}
-          <img
-            src={profileImage} 
-            alt="Profilo"
-            width={60}
-            height={60}
-            className="rounded-circle me-2"
-          />
+          <img src={profileImage} alt="Profilo" width={60} height={60} className="rounded-circle me-2" style={{ objectFit: "cover" }} />
           <Button
             className="d-flex bg-light border-secondary text-black rounded-pill w-100 flex-grow justify-content-start align-items-center"
             onClick={() => {
@@ -142,27 +126,16 @@ const Hero = () => {
       <div className="rounded-4 bg-white mt-2 p-3">
         <h4 className="fs-6 fw-bold mb-4">Consigliati per te</h4>
         <div className="d-flex flex-column">
-        
           <div className="d-flex align-items-center">
             <div className="d-flex me-4">
-              <img
-                src="https://via.placeholder.com/40" 
-                alt=""
-                width={40}
-                height={40}
-                className="rounded-circle me-3"
-              />
+              <img src="https://via.placeholder.com/40" alt="" width={40} height={40} className="rounded-circle me-3" />
               <div className="d-flex flex-column">
                 <p className="my-0 fs-5 fw-bold">Leonardo Ferrante-Carrante</p>
-                <p className="my-0 fs-6 text-secondary">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </p>
+                <p className="my-0 fs-6 text-secondary">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
               </div>
             </div>
             <div>
-              <Button className="text-primary btn-outline-primary rounded-pill px-4 bg-transparent">
-                + Segui
-              </Button>
+              <Button className="text-primary btn-outline-primary rounded-pill px-4 bg-transparent">+ Segui</Button>
             </div>
           </div>
           <hr />
@@ -177,13 +150,7 @@ const Hero = () => {
           <div className="rounded-4 bg-white mt-2" key={i}>
             <div className="d-flex align-items-start p-3">
               <div>
-                <img
-                  src={post.user.image}
-                  width={60}
-                  height={60}
-                  className="rounded-circle me-2"
-                  alt="not_found"
-                />
+                <img src={post.user.image} width={60} height={60} className="rounded-circle me-2" alt="not_found" />
               </div>
               <div className="d-flex flex-column">
                 <p className="text-secondary fs-6 my-0">
@@ -201,9 +168,7 @@ const Hero = () => {
             <div>
               <p className="fs-6 mt-2 ps-3">{post.text}</p>
             </div>
-            <div
-              style={{ width: "100%", height: "auto", marginInline: "auto" }}
-            >
+            <div style={{ width: "100%", height: "auto", marginInline: "auto" }}>
               <img src={post.user.image} width={"100%"} height={350} alt="" />
             </div>
             <hr />
@@ -226,10 +191,7 @@ const Hero = () => {
               </div>
               <div className="d-flex align-items-center">
                 <div className="d-flex align-items-center">
-                  <BiXCircle
-                    onClick={() => deletePost(post._id)}
-                    className="fs-4"
-                  ></BiXCircle>
+                  <BiXCircle onClick={() => deletePost(post._id)} className="fs-4"></BiXCircle>
                   <p className="fs-6 ms-2 my-0 fw-semibold">Delete Post</p>
                 </div>
               </div>
@@ -242,7 +204,8 @@ const Hero = () => {
 };
 
 export default Hero;
-      {/* <div className="rounded-4 bg-white mt-2">
+{
+  /* <div className="rounded-4 bg-white mt-2">
         <div className="d-flex mt-2 p-3">
           <div>
             <img
@@ -287,8 +250,10 @@ export default Hero;
             </div>
           </div>
         </div>
-      </div> */}
-      {/* <div className="rounded-4 bg-white mt-2">
+      </div> */
+}
+{
+  /* <div className="rounded-4 bg-white mt-2">
         <div className="d-flex mt-2 p-3">
           <div>
             <img
@@ -336,5 +301,5 @@ export default Hero;
             </div>
           </div>
         </div>
-      </div> */}
-
+      </div> */
+}

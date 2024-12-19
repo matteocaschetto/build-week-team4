@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button, Container } from "react-bootstrap";
 import { RiSendPlaneFill } from "react-icons/ri";
-import { IoMdCheckmark } from "react-icons/io";
+import { IoMdCheckmark, IoIosAddCircle } from "react-icons/io";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
@@ -10,16 +10,19 @@ import { FiPlusCircle } from "react-icons/fi";
 import ModalToAddExperience from "./ModalToAddExperience";
 import { useDispatch, useSelector } from "react-redux";
 import { ImCancelCircle } from "react-icons/im";
-import { IoIosAddCircle } from "react-icons/io";
+import ModalEditExperience from "./ModalEditExperience";
 
 const ProfileDetails = () => {
   const [profile, setProfile] = useState(null); // Stato per memorizzare i dati del profilo
   const [isLoading, setIsLoading] = useState(true); // Stato per la gestione del caricamento
   const [modalShow, setModalShow] = useState(false); // stato per gestione del modale
+  const [modalEdit, setModalEdit] = useState(false);
   const [experiences, setExperiences] = useState([]);
-  const [imageFile, setImageFile] = useState(null);  // Stato per il file immagine
+  const [selectedExperience, setSelectedExperience] = useState({});
+  const [imageFile, setImageFile] = useState(null); // Stato per il file immagine
   const allExperiences = useSelector((state) => state.experiences);
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE";  // Usa un token valido
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE";
   const dispatch = useDispatch();
 
   const deleteExperience = (exp) => {
@@ -27,11 +30,13 @@ const ProfileDetails = () => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
+        Authorization: `Bearer ${token}`
+      }
     })
       .then((resp) => {
         if (resp.ok) {
+          console.log("eleminita");
+          dispatch({ type: "REMOVE_EXPERIENCES", payload: exp._id });
           console.log("Deleted experience");
         }
       })
@@ -44,8 +49,8 @@ const ProfileDetails = () => {
         const response = await fetch("https://striveschool-api.herokuapp.com/api/profile/me", {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${token}`,
-          },
+            Authorization: `Bearer ${token}`
+          }
         });
 
         if (!response.ok) {
@@ -70,17 +75,17 @@ const ProfileDetails = () => {
       fetch(`https://striveschool-api.herokuapp.com/api/profile/${profile._id}/experiences`, {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`,
-        },
+          Authorization: `Bearer ${token}`
+        }
       })
-        .then((res) => res.ok ? res.json() : Promise.reject('Error fetching experiences'))
+        .then((res) => (res.ok ? res.json() : Promise.reject("Error fetching experiences")))
         .then((arr) => setExperiences(arr))
         .catch((err) => console.log(err));
     }
   }, [profile, allExperiences]);
 
   const handleImageChange = (e) => {
-    setImageFile(e.target.files[0]);  // Salva il file immagine selezionato
+    setImageFile(e.target.files[0]); // Salva il file immagine selezionato
   };
 
   const handleImageUpload = async () => {
@@ -90,15 +95,15 @@ const ProfileDetails = () => {
     }
 
     const formData = new FormData();
-    formData.append("profile", imageFile);  // Aggiungi il file al formData
+    formData.append("profile", imageFile); // Aggiungi il file al formData
 
     try {
       const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${profile._id}/picture`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`
         },
-        body: formData,  // Invia i dati del modulo contenenti l'immagine
+        body: formData // Invia i dati del modulo contenenti l'immagine
       });
 
       if (!response.ok) {
@@ -106,7 +111,7 @@ const ProfileDetails = () => {
       }
 
       const data = await response.json();
-      setProfile(data);  // Aggiorna il profilo con la nuova immagine
+      setProfile(data); // Aggiorna il profilo con la nuova immagine
       alert("Profile image updated successfully!");
     } catch (error) {
       console.error("Error uploading image:", error);
@@ -136,33 +141,19 @@ const ProfileDetails = () => {
           <img
             src={profile.image}
             alt="Profile"
-            style={{ top: "22%", left: "0", borderRadius: "50%" }}
+            style={{ top: "22%", left: "0", borderRadius: "50%", objectFit: "cover" }}
             width={100}
             height={100}
             className="ms-4 mt-2"
           />
-          
+
           {/* Pulsanti di modifica immagine */}
           <div className=" d-flex gap-2 ms-auto">
-            <Button
-              variant="secondary"
-              onClick={() => document.getElementById("profile-image-input").click()}
-              className="mb-2 rounded-circle btn btn-sm"
-            >
+            <Button variant="secondary" onClick={() => document.getElementById("profile-image-input").click()} className="mb-2 rounded-circle btn btn-sm">
               <IoIosAddCircle />
             </Button>
-            <input
-              type="file"
-              id="profile-image-input"
-              accept="image/*"
-              onChange={handleImageChange}
-              style={{ display: "none" }} 
-            />
-            <Button 
-              variant="secondary"
-              className="btn btn-sm rounded-pill me-2" 
-              onClick={handleImageUpload}
-            >
+            <input type="file" id="profile-image-input" accept="image/*" onChange={handleImageChange} style={{ display: "none" }} />
+            <Button variant="secondary" className="btn btn-sm rounded-pill me-2" onClick={handleImageUpload}>
               Update Profile Picture
             </Button>
           </div>
@@ -170,9 +161,12 @@ const ProfileDetails = () => {
 
         <div className="d-flex justify-content-between w-100 align-items-center mt-3 ps-4">
           <div>
-            <h3 className="m-0">{profile.name} {profile.surname}</h3>
+            <h3 className="m-0">
+              {profile.name} {profile.surname}
+            </h3>
             <p>{profile.title}</p>
             <p>{profile.area}</p>
+            <p>{profile.email}</p>
           </div>
         </div>
 
@@ -266,12 +260,22 @@ const ProfileDetails = () => {
                 <div className="d-flex justify-content-between align-items-baseline">
                   <p className="fw-bold">{exp.role}</p>
                   <div>
-                    <button onClick={() => deleteExperience(exp)} className="border-0 bg-white me-auto">
-                      <ImCancelCircle className="ms-2" />
-                    </button>
-                    <button className="border-0 bg-white me-auto">
-                      <IoPencil />
-                    </button>
+                    <div>
+                      <button onClick={() => deleteExperience(exp)} className="border-0 bg-white me-auto ">
+                        <ImCancelCircle className="ms-2" />
+                      </button>
+                    </div>
+                    <div>
+                      <button
+                        className="border-0 bg-white me-auto"
+                        onClick={() => {
+                          setModalEdit(true);
+                          setSelectedExperience(exp);
+                        }}
+                      >
+                        <IoPencil />
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <p>
@@ -288,6 +292,7 @@ const ProfileDetails = () => {
             </div>
           )}
         </div>
+        <ModalEditExperience id={profile._id} show={modalEdit} onHide={() => setModalEdit(false)} details={selectedExperience} />
       </div>
     </Container>
   );
