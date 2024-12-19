@@ -286,17 +286,17 @@ const ProfileDetails = () => {
         </div>
       </div>
       <div className="rounded-4 bg-white mt-2 p-3">
-        <div className=" d-flex align-items-center fw-semibold">
+        <div className=" d-flex align-items-center fw-semibold mb-4">
           <p>Esperienze</p>
           <div className="ms-auto">
             <Button
               variant="light"
-              className="p-1 border-0 "
+              className="p-1 border-0 text-secondary bg-transparent"
               onClick={() => {
                 setModalShow(true);
               }}
             >
-              <FiPlusCircle className="fs-4 me-2" />
+              <FiPlusCircle className="fs-2" />
             </Button>
             <ModalToAddExperience
               show={modalShow}
@@ -317,7 +317,7 @@ const ProfileDetails = () => {
                     >
                       <Trash className="ms-2 text-danger" />
                     </button>
-                    <button className="border-0 bg-white me-auto">
+                    <button className="border-0 bg-transparent ms-2 me-auto">
                       <IoPencil />
                     </button>
                   </div>
