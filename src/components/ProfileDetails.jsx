@@ -9,7 +9,7 @@ import { IoPencil } from "react-icons/io5";
 import { FiPlusCircle } from "react-icons/fi";
 import ModalToAddExperience from "./ModalToAddExperience";
 import { useDispatch, useSelector } from "react-redux";
-import { IoIosAddCircle } from "react-icons/io";
+import ModalEditExperience from "./ModalEditExperience";
 import { Trash } from "react-bootstrap-icons";
 
 const ProfileDetails = () => {
@@ -322,7 +322,13 @@ const ProfileDetails = () => {
                     >
                       <Trash className="ms-2 text-danger" />
                     </button>
-                    <button className="border-0 bg-transparent ms-2 me-auto">
+                    <button
+                      className="border-0 bg-transparent ms-2 me-auto"
+                      onClick={() => {
+                        setModalEdit(true);
+                        setSelectedExperience(exp);
+                      }}
+                    >
                       <IoPencil />
                     </button>
                   </div>
