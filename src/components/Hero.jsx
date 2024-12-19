@@ -122,6 +122,9 @@ const Hero = () => {
           </p>
         </div>
       </div>
+      
+
+      
       <hr />
       <div className="rounded-4 bg-white mt-2 p-3">
         <h4 className="fs-6 fw-bold mb-4">Consigliati per te</h4>

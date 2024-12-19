@@ -47,7 +47,7 @@ useEffect (() =>{
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxKQClJxfLRjnXNxZi2-6EwQlOgdOj_Sj1A&s"alt=""width={100} height={100} className="rounded-circle ms-4 position-absolute start-0" style={{top:"35%"}}
         />
         <div className="px-3">
-        <h3 className="ps-3 mx-0 mb-0" style={{marginTop:"60px"}}>Mario Rossi</h3>
+        <h3 className="ps-3 mx-0 mb-0" style={{marginTop:"80px"}}>Mario Rossi</h3>
         <p className="ps-3 fw-semibold m-0">Architetto</p>
         <p className="ps-3 mb-1">Torino, Piemonte</p>
         </div>
@@ -113,7 +113,7 @@ useEffect (() =>{
              <p className="fs-6 text-secondary">Ricevi segnalazioni più rilevanti tenendo aggiornate le tue preferenze Disponibile a lavorare.</p>
              <div className="d-flex">
                <div className="me-2">
-                 <img src="https://cdn.pixabay.com/photo/2023/02/06/01/29/man-7770930_1280.jpg" width={70} height={70} alt="" />
+                 <img src="https://cdn.pixabay.com/photo/2024/10/20/08/29/portrait-9134409_1280.png" width={70} height={70} alt="" />
                </div>
                <div className="d-flex flex-column">
                   <p className="fw-semibold mb-0">Dsiponibile per trovare lavoro</p>
@@ -139,15 +139,15 @@ useEffect (() =>{
           </div>
           <div className="rounded-4 p-4 bg-white mt-2">
             <div className="d-flex">
-              <img className="rounded-circle" src="https://cdn.pixabay.com/photo/2023/02/06/01/29/man-7770930_1280.jpg" width={70} height={70} alt="" />
+              <img className="rounded-circle" src="https://cdn.pixabay.com/photo/2015/01/08/18/29/entrepreneur-593358_1280.jpg" width={70} height={70} alt="" />
               <p className="fs-5 ps-4 fw-semibold">Vedi elenco completo delle offerte di lavoro per cui saresti fra i migliori candidati</p>
             </div>
             <div>
                 <div className="d-flex align-items-center">
                    <div className="d-flex ms-5 position-relative">
-                      <img src="https://cdn.pixabay.com/photo/2023/02/06/01/29/man-7770930_1280.jpg" width={30} height={30} className="rounded-circle" alt="" />
-                      <img src="https://cdn.pixabay.com/photo/2023/02/06/01/29/man-7770930_1280.jpg" width={30} height={30} className="rounded-circle" alt="" />
-                      <img src="https://cdn.pixabay.com/photo/2023/02/06/01/29/man-7770930_1280.jpg" width={30} height={30} className="rounded-circle" alt="" />
+                      <img src="https://cdn.pixabay.com/photo/2022/09/08/15/16/cute-7441224_1280.jpg" width={30} height={30} className="rounded-circle" alt="" />
+                      <img src="https://cdn.pixabay.com/photo/2015/03/03/08/55/portrait-657116_1280.jpg" width={30} height={30} className="rounded-circle" alt="" />
+                      <img src="https://cdn.pixabay.com/photo/2020/11/06/03/43/protective-suit-5716753_1280.jpg" width={30} height={30} className="rounded-circle" alt="" />
                    </div>
                    <div>
                     <p className="text-secondary mb-0 ps-2">Milioni di utenti usano Premium</p>

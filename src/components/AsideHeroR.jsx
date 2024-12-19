@@ -20,23 +20,23 @@ export const AsideHeroR = () => {
             </div>
             <div className="d-flex flex-column">
               <p className="fw-semibold mb-0" style={{fontSize:"0.9rem"}}>Tech 2025</p>
-              <p style={{fontSize:"0.7rem"}} className="text-secondary">6 giorni fa <span>&#8226</span>1728 lettori</p>
+              <p style={{fontSize:"0.7rem"}} className="text-secondary">1 giorno fa <span>&#8226</span>1728 lettori</p>
             </div>
             <div className="d-flex flex-column">
-              <p className="fw-semibold mb-0" style={{fontSize:"0.9rem"}}>Tech 2025</p>
-              <p style={{fontSize:"0.7rem"}} className="text-secondary">6 giorni fa <span>&#8226</span>1728 lettori</p>
+              <p className="fw-semibold mb-0" style={{fontSize:"0.9rem"}}>Revolut diventa banca italiana</p>
+              <p style={{fontSize:"0.7rem"}} className="text-secondary">1 giorno fa <span>&#8226</span>975 lettori</p>
             </div>
             <div className="d-flex flex-column">
-              <p className="fw-semibold mb-0" style={{fontSize:"0.9rem"}}>Tech 2025</p>
-              <p style={{fontSize:"0.7rem"}} className="text-secondary">6 giorni fa <span>&#8226</span>1728 lettori</p>
+              <p className="fw-semibold mb-0" style={{fontSize:"0.9rem"}}>Istantanee dal MAximall Pompeii</p>
+              <p style={{fontSize:"0.7rem"}} className="text-secondary">1 giorno fa <span>&#8226</span>427 lettori</p>
             </div>
             <div className="d-flex flex-column">
-              <p className="fw-semibold mb-0" style={{fontSize:"0.9rem"}}>Tech 2025</p>
-              <p style={{fontSize:"0.7rem"}} className="text-secondary">6 giorni fa <span>&#8226</span>1728 lettori</p>
+              <p className="fw-semibold mb-0" style={{fontSize:"0.9rem"}}>Come sarà il lavoro nel 2025</p>
+              <p style={{fontSize:"0.7rem"}} className="text-secondary">1 giorno fa <span>&#8226</span>284 lettori</p>
             </div>
             <div className="d-flex flex-column">
-              <p className="fw-semibold mb-0" style={{fontSize:"0.9rem"}}>Tech 2025</p>
-              <p style={{fontSize:"0.7rem"}} className="text-secondary mb-0">6 giorni fa <span>&#8226</span>1728 lettori</p>
+              <p className="fw-semibold mb-0" style={{fontSize:"0.9rem"}}>Big Ideas: 15 spunti per il 2025</p>
+              <p style={{fontSize:"0.7rem"}} className="text-secondary mb-0">1 giorno fa <span>&#8226</span>4620 lettori</p>
             </div>
             <div className="mb-2 d-flex align-items-center">
               <p className="fs-6 mt-3">Vedi Altro </p>
