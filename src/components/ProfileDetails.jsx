@@ -20,6 +20,7 @@ const ProfileDetails = () => {
   const [experiences, setExperiences] = useState([]);
   const [selectedExperience, setSelectedExperience] = useState({});
   const [imageFile, setImageFile] = useState(null); // Stato per il file immagine
+  const [experienceImages, setExperienceImages] = useState([]); // Stato per le immagini delle esperienze
   const allExperiences = useSelector((state) => state.experiences);
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE";
@@ -95,22 +96,26 @@ const ProfileDetails = () => {
     }
   }, [profile, allExperiences]);
 
-  const handleImageChange = (e) => {
+  const handleImageChange = (e, experienceId) => {
     setImageFile(e.target.files[0]); // Salva il file immagine selezionato
+    // Salva l'immagine per una specifica esperienza
+    const newExperienceImages = { ...experienceImages };
+    newExperienceImages[experienceId] = e.target.files[0];
+    setExperienceImages(newExperienceImages);
   };
 
-  const handleImageUpload = async () => {
+  const handleImageUpload = async (experienceId) => {
     if (!imageFile) {
       alert("Please select an image.");
       return;
     }
 
     const formData = new FormData();
-    formData.append("profile", imageFile); // Aggiungi il file al formData
+    formData.append("experienceImage", imageFile); // Aggiungi il file immagine per esperienza
 
     try {
       const response = await fetch(
-        `https://striveschool-api.herokuapp.com/api/profile/${profile._id}/picture`,
+        `https://striveschool-api.herokuapp.com/api/profile/${profile._id}/experiences/${experienceId}/picture`,
         {
           method: "POST",
           headers: {
@@ -125,8 +130,14 @@ const ProfileDetails = () => {
       }
 
       const data = await response.json();
-      setProfile(data); // Aggiorna il profilo con la nuova immagine
-      alert("Profile image updated successfully!");
+      alert("Experience image uploaded successfully!");
+      // Aggiorna la lista delle esperienze
+      const updatedExperiences = experiences.map((exp) =>
+        exp._id === experienceId
+          ? { ...exp, image: data.image } // Aggiorna l'immagine dell'esperienza
+          : exp
+      );
+      setExperiences(updatedExperiences);
     } catch (error) {
       console.error("Error uploading image:", error);
     }
@@ -341,6 +352,26 @@ const ProfileDetails = () => {
                   Presente dal {exp.startDate.slice(0, 10)} fino a{" "}
                   {exp.endDate.slice(0, 10)}
                 </p>
+
+                {/* Caricamento e visualizzazione immagini per esperienza */}
+                <div className="mt-2">
+                  <input
+                    type="file"
+                    onChange={(e) => handleImageChange(e, exp._id)}
+                    accept="image/*"
+                    className="mb-2"
+                  />
+                  
+                  {experienceImages[exp._id] && (
+                    <div className="mt-3">
+                      <img
+                        src={URL.createObjectURL(experienceImages[exp._id])}
+                        alt="Experience Image"
+                        className="img-fluid mt-2"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
             ))
           ) : (
