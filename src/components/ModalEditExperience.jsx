@@ -1,20 +1,43 @@
-import { useState } from "react";
-import { Alert, Button, Col, Form, Modal, Row } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { Button, Col, Form, Modal, Row } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 
-const ModalToAddExperience = (props) => {
-  console.log(props)
-  const [experience, setExperience] = useState({});
-  //const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const singleProfile = useSelector((state) => state.singleProfile._id);
+const ModalEditExperience = (props) => {
   const dispatch = useDispatch();
+  const [experience, setExperience] = useState({
+    role: props.details.role,
+    company: props.details.company,
+    description: props.details.description,
+    area: props.details.area,
+    startDate: props.details.startDate,
+    endDate: props.details.endDate,
+    id: props.details._id,
+    user: props.details.user
+  });
+
+  // Quando il prop 'details' cambia, aggiorna lo stato locale dell'esperienza
+  useEffect(() => {
+    if (props.details) {
+      setExperience({
+        role: props.details.role,
+        company: props.details.company,
+        description: props.details.description,
+        area: props.details.area,
+        startDate: props.details.startDate,
+        endDate: props.details.endDate,
+        id: props.details._id,
+        user: props.details.user
+      });
+    }
+  }, [props.details]);
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE";
-  const createExperiences = (e) => {
+
+  const fetchEditExperience = (e) => {
     e.preventDefault();
-    fetch(`https://striveschool-api.herokuapp.com/api/profile/${singleProfile}/experiences`, {
-      method: "POST",
+
+    fetch(`https://striveschool-api.herokuapp.com/api/profile/${experience.user}/experiences/${experience.id}`, {
+      method: "PUT",
       body: JSON.stringify({
         company: `${experience.company}`,
         role: `${experience.role}`,
@@ -35,28 +58,23 @@ const ModalToAddExperience = (props) => {
           throw new Error("Errore nell'aggiunta dell'esperienza");
         }
       })
-      .then((data) => {
-        //setSuccessMessage("Esperienza aggiunta con successo!");
-        setErrorMessage("");
-        dispatch({ type: "ADD_EXPERIENCES", payload: data });
+      .then((res) => {
+        console.log(res);
+        dispatch({ type: "ADD_EXPERIENCES", payload: res });
         setExperience({});
         props.onHide();
       })
       .catch((err) => {
         console.log(err);
-        setErrorMessage("Errore nell'aggiunta dell'esperienza");
       });
   };
-
   return (
     <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">Aggiungi una nuova esperienza</Modal.Title>
+      <Modal.Header>
+        <Modal.Title id="contained-modal-title-vcenter">Modifica una nuova esperienza</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-
-        <Form onSubmit={createExperiences}>
+        <Form onSubmit={fetchEditExperience}>
           <Form.Group as={Row} className="mb-3" controlId="Position">
             <Form.Label required column sm="2">
               Role
@@ -117,23 +135,18 @@ const ModalToAddExperience = (props) => {
             <Col sm={6}>
               <Form.Group className="mb-3" controlId="description">
                 <Form.Label>Start Date</Form.Label>
-                <Form.Control
-                  type="date"
-                  required
-                  value={experience.startDate}
-                  onChange={(e) => setExperience({ ...experience, startDate: e.target.value.toString() })}
-                />
+                <Form.Control type="date" required />
               </Form.Group>
             </Col>
             <Col sm={6}>
               <Form.Group className="mb-3" controlId="description">
                 <Form.Label>End Date</Form.Label>
-                <Form.Control type="date" value={experience.endDate} onChange={(e) => setExperience({ ...experience, endDate: e.target.value.toString() })} />
+                <Form.Control type="date" />
               </Form.Group>
             </Col>
           </Row>
-          <Button type="submit" variant="success">
-            AGGIUNGI
+          <Button type="subimit" variant="warning">
+            Modifica
           </Button>
         </Form>
       </Modal.Body>
@@ -144,4 +157,4 @@ const ModalToAddExperience = (props) => {
   );
 };
 
-export default ModalToAddExperience;
+export default ModalEditExperience;

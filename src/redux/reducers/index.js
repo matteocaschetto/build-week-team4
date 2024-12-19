@@ -16,10 +16,10 @@ const mainReducer = (state = initialState, action) => {
         ...state,
         experiences: [...state.experiences, action.payload]
       };
-    case "SET_EXPERIENCES":
+    case "REMOVE_EXPERIENCES":
       return {
         ...state,
-        experiences: action.payload
+        experiences: state.experiences.filter((exp) => exp._id !== action.payload)
       };
       case "CREATE_POST":
         return{

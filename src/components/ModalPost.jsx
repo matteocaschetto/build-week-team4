@@ -2,13 +2,13 @@ import { useState } from "react";
 import { Alert, Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 
- const ModalPost = (props) => {
+const ModalPost = (props) => {
   const [post, setPost] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  console.log(post)
+  console.log(post);
 
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYyOTk0ODUzMDRhNzAwMTUxNDhiYTgiLCJpYXQiOjE3MzQ1MTUwMTYsImV4cCI6MTczNTcyNDYxNn0.RMek1AdjnaeoEAUxohHgGqf4WFC9h9PjmVjNENmavHQ";
@@ -18,7 +18,7 @@ import { useDispatch } from "react-redux";
       method: "POST",
       body: JSON.stringify({
         text: `${post.text}`,
-        URL :  `${post.URL}`
+        URL: `${post.URL}`
       }),
       headers: {
         "Content-Type": "application/json",
@@ -31,7 +31,7 @@ import { useDispatch } from "react-redux";
           setSuccessMessage("esperienza aggiunta");
           setErrorMessage("");
           dispatch({ type: "CREATE_POST", payload: resp });
-          console.log("PostFetch", resp)
+          console.log("PostFetch", resp);
         } else {
           setErrorMessage("errore");
         }
@@ -42,16 +42,9 @@ import { useDispatch } from "react-redux";
   };
 
   return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
+    <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Crea un Nuovo Post!
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Crea un Nuovo Post!</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
@@ -64,13 +57,11 @@ import { useDispatch } from "react-redux";
                 placeholder="Di cosa vorresti parlare?"
                 required
                 value={post.text}
-                onChange={(e) =>
-                  setPost({ ...post, text: e.target.value })
-                }
+                onChange={(e) => setPost({ ...post, text: e.target.value })}
               />
-           </Col>
+            </Col>
           </Form.Group>
-         <Form.Group as={Row} className="mb-3" controlId="companyName">
+          <Form.Group as={Row} className="mb-3" controlId="companyName">
             <Form.Label column sm="2">
               Image URL
             </Form.Label>
@@ -80,13 +71,11 @@ import { useDispatch } from "react-redux";
                 placeholder="Inserisci qui l' URL dell' immagine che desideri visualizzare"
                 required
                 value={post.URL}
-                onChange={(e) =>
-                  setPost({ ...post, URL: e.target.value })
-                }
+                onChange={(e) => setPost({ ...post, URL: e.target.value })}
               />
             </Col>
           </Form.Group>
-           {/*<Form.Group as={Row} className="mb-3" controlId="description">
+          {/*<Form.Group as={Row} className="mb-3" controlId="description">
             <Form.Label column sm="2">
               Post Description
             </Form.Label>
@@ -96,9 +85,7 @@ import { useDispatch } from "react-redux";
                 placeholder="Inserisci la descrizione del tuo post"
                 required
                 value={experience.description}
-                onChange={(e) =>
-                  setExperience({ ...experience, description: e.target.value })
-                }
+                onChange={(e) => setExperience({ ...experience, description: e.target.value })}
               />
             </Col>
           </Form.Group>
@@ -112,9 +99,7 @@ import { useDispatch } from "react-redux";
                 placeholder="Area"
                 required
                 value={experience.area}
-                onChange={(e) =>
-                  setExperience({ ...experience, area: e.target.value })
-                }
+                onChange={(e) => setExperience({ ...experience, area: e.target.value })}
               />
             </Col>
           </Form.Group>
@@ -154,9 +139,9 @@ import { useDispatch } from "react-redux";
         </Form>
       </Modal.Body>
       <Modal.Footer>
-          <Button onClick={createPost} type="submit" variant="success">
-            Pubblica
-          </Button>
+        <Button onClick={createPost} type="submit" variant="success">
+          Pubblica
+        </Button>
       </Modal.Footer>
     </Modal>
   );
