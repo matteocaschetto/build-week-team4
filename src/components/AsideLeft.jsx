@@ -5,7 +5,7 @@ import { PiNewspaperFill } from "react-icons/pi";
 import { MdGroups2, MdEventNote } from "react-icons/md";
 
 const AsideLeft = () => {
-  const [profile, setProfile] = useState(null); // State to hold profile data
+  const [profile, setProfile] = useState(null); 
   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE"; // Replace with the actual token
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const AsideLeft = () => {
         }
 
         const data = await response.json();
-        setProfile(data); // Set profile data to state
+        setProfile(data); 
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
@@ -33,7 +33,7 @@ const AsideLeft = () => {
   }, [token]);
 
   if (!profile) {
-    return <div>Loading profile...</div>; // Show loading state until profile is fetched
+    return <div>Loading profile...</div>; 
   }
 
   return (
@@ -54,10 +54,10 @@ const AsideLeft = () => {
           style={{ top: "35%" }}
         />
         <h3 className="ps-3 mx-0 mb-0" style={{ marginTop: "60px" }}>
-          {profile.name} {profile.surname} {/* Dynamically set name */}
+          {profile.name} {profile.surname} 
         </h3>
-        <p className="ps-3 fw-semibold m-0">{profile.title}</p> {/* Dynamically set title */}
-        <p className="ps-3 mb-1">{profile.area}</p> {/* Dynamically set area */}
+        <p className="ps-3 fw-semibold m-0">{profile.title}</p> 
+        <p className="ps-3 mb-1">{profile.area}</p> 
       </div>
 
       <div className="rounded-4 bg-white mt-2">

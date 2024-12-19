@@ -104,7 +104,7 @@ const Hero = () => {
         <div className="d-flex">
           {/* Usa l'immagine del profilo dinamica */}
           <img
-            src={profileImage || "https://via.placeholder.com/60"} // Imposta un'immagine di fallback nel caso in cui non venga recuperata l'immagine
+            src={profileImage} 
             alt="Profilo"
             width={60}
             height={60}
@@ -142,11 +142,11 @@ const Hero = () => {
       <div className="rounded-4 bg-white mt-2 p-3">
         <h4 className="fs-6 fw-bold mb-4">Consigliati per te</h4>
         <div className="d-flex flex-column">
-          {/* Questo è solo un esempio, puoi sostituire con altri suggerimenti */}
+        
           <div className="d-flex align-items-center">
             <div className="d-flex me-4">
               <img
-                src="https://via.placeholder.com/40" // Usa un'immagine di esempio
+                src="https://via.placeholder.com/40" 
                 alt=""
                 width={40}
                 height={40}
