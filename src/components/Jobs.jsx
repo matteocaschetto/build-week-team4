@@ -128,13 +128,13 @@ useEffect (() =>{
                 <BiXCircle className="fs-4"></BiXCircle>
             </div>
             <div className="d-flex flex-wrap mt-3">
-              <Button className="bg-white btn-outline-primary px-3 fw-semibold rounded-pill me-2 mb-3  text-primary"><BiSearch className="fw-bolder fs-4 pe-1"></BiSearch>Data</Button>
-              <Button className="bg-white btn-outline-primary px-3 fw-semibold rounded-pill me-2 mb-3  text-primary"><BiSearch className="fw-bolder fs-4 pe-1"></BiSearch>Finance / Legal</Button>
-              <Button className="bg-white btn-outline-primary px-3 fw-semibold rounded-pill me-2 mb-3  text-primary"><BiSearch className="fw-bolder fs-4 pe-1"></BiSearch>Marketing</Button>
-              <Button className="bg-white btn-outline-primary px-3 fw-semibold rounded-pill me-2 mb-3  text-primary"><BiSearch className="fw-bolder fs-4 pe-1"></BiSearch>Customer Service</Button>
-              <Button className="bg-white btn-outline-primary px-3 fw-semibold rounded-pill me-2 mb-3  text-primary"><BiSearch className="fw-bolder fs-4 pe-1"></BiSearch>Human Resources</Button>
-              <Button className="bg-white btn-outline-primary px-3 fw-semibold rounded-pill me-2 mb-3  text-primary"><BiSearch className="fw-bolder fs-4 pe-1"></BiSearch>Software Development</Button>
-              <Button className="bg-white btn-outline-primary px-3 fw-semibold rounded-pill me-2 mb-3  text-primary"><BiSearch className="fw-bolder fs-4 pe-1"></BiSearch>Writing</Button>
+              <Button onClick={() => {}} className="bg-white btn-outline-primary px-3 fw-semibold rounded-pill me-2 mb-3  text-primary"><BiSearch className="fw-bolder fs-4 pe-1"></BiSearch>Data</Button>
+              <Button onClick={() => {}} className="bg-white btn-outline-primary px-3 fw-semibold rounded-pill me-2 mb-3  text-primary"><BiSearch className="fw-bolder fs-4 pe-1"></BiSearch>Finance / Legal</Button>
+              <Button onClick={() => {}} className="bg-white btn-outline-primary px-3 fw-semibold rounded-pill me-2 mb-3  text-primary"><BiSearch className="fw-bolder fs-4 pe-1"></BiSearch>Marketing</Button>
+              <Button onClick={() => {}} className="bg-white btn-outline-primary px-3 fw-semibold rounded-pill me-2 mb-3  text-primary"><BiSearch className="fw-bolder fs-4 pe-1"></BiSearch>Customer Service</Button>
+              <Button onClick={() => {}} className="bg-white btn-outline-primary px-3 fw-semibold rounded-pill me-2 mb-3  text-primary"><BiSearch className="fw-bolder fs-4 pe-1"></BiSearch>Human Resources</Button>
+              <Button onClick={() => {}} className="bg-white btn-outline-primary px-3 fw-semibold rounded-pill me-2 mb-3  text-primary"><BiSearch className="fw-bolder fs-4 pe-1"></BiSearch>Software Development</Button>
+              <Button onClick={() => {}} className="bg-white btn-outline-primary px-3 fw-semibold rounded-pill me-2 mb-3  text-primary"><BiSearch className="fw-bolder fs-4 pe-1"></BiSearch>Writing</Button>
             </div>
           </div>
           <div className="rounded-4 p-4 bg-white mt-2">
