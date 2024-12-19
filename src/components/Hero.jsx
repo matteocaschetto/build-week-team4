@@ -5,7 +5,6 @@ import { MdEventNote } from "react-icons/md";
 import { MdOutlineArticle } from "react-icons/md";
 import {
   BiWorld,
-  BiArrowToRight,
   BiLike,
   BiHeart,
   BiComment,
@@ -14,21 +13,69 @@ import {
 import { format } from "date-fns";
 import ModalPost from "./ModalPost";
 import { useSelector } from "react-redux";
-/* import Lexusvideo from "../assets/video/Lexusvideo.mp4"; */
 
 const Hero = () => {
   const [posts, setPosts] = useState([]);
   const [modalShow, setModalShow] = useState(false);
-  const createdPosts = useSelector((state) => state.post)
-  console.log("Post nuovo",createdPosts)
-  const [createdPost, setCreatePost] = useState([])
-  console.log(createdPost)
+  const [profileImage, setProfileImage] = useState(""); // stato per l'immagine del profilo
+  const createdPosts = useSelector((state) => state.post);
+  const [createdPost, setCreatePost] = useState([]);
 
   const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYyOTk0ODUzMDRhNzAwMTUxNDhiYTgiLCJpYXQiOjE3MzQ1MTUwMTYsImV4cCI6MTczNTcyNDYxNn0.RMek1AdjnaeoEAUxohHgGqf4WFC9h9PjmVjNENmavHQ";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE";
 
-  console.log()
-  const deletePost = (post) =>{
+  // Funzione per ottenere il profilo dell'utente e la sua immagine
+  const fetchUserProfile = async () => {
+    try {
+      const response = await fetch(
+        "https://striveschool-api.herokuapp.com/api/profile/me",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Errore nel recupero del profilo");
+      }
+
+      const data = await response.json();
+      setProfileImage(data.image); // Imposta l'immagine del profilo dinamicamente
+    } catch (error) {
+      console.error("Errore nel recupero del profilo:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchMain = async () => {
+      try {
+        const response = await fetch("https://striveschool-api.herokuapp.com/api/posts/", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error("Errore nel recupero dei post");
+        }
+
+        const data = await response.json();
+        setPosts(data.slice(1800,));
+        setCreatePost(createdPosts);
+      } catch (error) {
+        console.error("Errore nel recupero dei post:", error);
+      }
+    };
+    
+    fetchMain();
+    fetchUserProfile(); // Chiamata per ottenere l'immagine del profilo
+  }, []);
+
+  // Funzione per eliminare il post
+  const deletePost = (post) => {
     fetch(`https://striveschool-api.herokuapp.com/api/posts/${post}`, {
       method: "DELETE",
       headers: {
@@ -36,46 +83,14 @@ const Hero = () => {
         Authorization: `Bearer ${token}`
       }
     })
-    .then((resp) => {
-      if (resp.ok) {
-        console.log("eleminita");
-      }
-    })
-    .catch((err) => console.log(err));
-};
-
-
-  useEffect(() => {
-    const fetchMain = async () => {
-      try {
-        const token =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYyOTk0ODUzMDRhNzAwMTUxNDhiYTgiLCJpYXQiOjE3MzQ1MTUwMTYsImV4cCI6MTczNTcyNDYxNn0.RMek1AdjnaeoEAUxohHgGqf4WFC9h9PjmVjNENmavHQ"; // Assicurati di inserire il token corretto
-        const response = await fetch(
-          "https://striveschool-api.herokuapp.com/api/posts/",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Errore nel recupero del profilo");
+      .then((resp) => {
+        if (resp.ok) {
+          console.log("Post eliminato");
         }
+      })
+      .catch((err) => console.log(err));
+  };
 
-        const data = await response.json();
-
-        console.log(data);
-
-        setPosts(data.slice(1800,));
-        setCreatePost(createdPosts)
-      } catch (error) {
-        console.error("Errore nel recupero del profilo:", error);
-      }
-    };
-    fetchMain();
-  }, []);
   return (
     <Container className="d-flex flex-column">
       <div className="rounded-4 bg-white mt-2 p-3">
@@ -87,12 +102,13 @@ const Hero = () => {
       </div>
       <div className="rounded-4 bg-white mt-2 px-3 pt-3">
         <div className="d-flex">
+          {/* Usa l'immagine del profilo dinamica */}
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxKQClJxfLRjnXNxZi2-6EwQlOgdOj_Sj1A&s"
-            alt=""
+            src={profileImage} 
+            alt="Profilo"
             width={60}
             height={60}
-            className="rounded-circle"
+            className="rounded-circle me-2"
           />
           <Button
             className="d-flex bg-light border-secondary text-black rounded-pill w-100 flex-grow justify-content-start align-items-center"
@@ -126,10 +142,11 @@ const Hero = () => {
       <div className="rounded-4 bg-white mt-2 p-3">
         <h4 className="fs-6 fw-bold mb-4">Consigliati per te</h4>
         <div className="d-flex flex-column">
+        
           <div className="d-flex align-items-center">
             <div className="d-flex me-4">
               <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxKQClJxfLRjnXNxZi2-6EwQlOgdOj_Sj1A&s"
+                src="https://via.placeholder.com/40" 
                 alt=""
                 width={40}
                 height={40}
@@ -140,9 +157,6 @@ const Hero = () => {
                 <p className="my-0 fs-6 text-secondary">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 </p>
-                <p className="my-0 fs-6 text-secondary">
-                  Lorem ipsum dolor sit amet.
-                </p>
               </div>
             </div>
             <div>
@@ -152,138 +166,82 @@ const Hero = () => {
             </div>
           </div>
           <hr />
-          <div className="d-flex align-items-center">
-            <div className="d-flex me-4">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxKQClJxfLRjnXNxZi2-6EwQlOgdOj_Sj1A&s"
-                alt=""
-                width={40}
-                height={40}
-                className="rounded-circle me-3"
-              />
-              <div className="d-flex flex-column">
-                <p className="my-0 fs-5 fw-bold">Leonardo Ferrante-Carrante</p>
-                <p className="my-0 fs-6 text-secondary">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </p>
-                <p className="my-0 fs-6 text-secondary">
-                  Lorem ipsum dolor sit amet.
-                </p>
-              </div>
-            </div>
-            <div>
-              <Button className="text-primary btn-outline-primary rounded-pill px-4 bg-transparent">
-                + Segui
-              </Button>
-            </div>
-          </div>
-          <hr />
-          <div className="d-flex align-items-center">
-            <div className="d-flex me-4">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxKQClJxfLRjnXNxZi2-6EwQlOgdOj_Sj1A&s"
-                alt=""
-                width={40}
-                height={40}
-                className="rounded-circle me-3"
-              />
-              <div className="d-flex flex-column">
-                <p className="my-0 fs-5 fw-bold">Leonardo Ferrante-Carrante</p>
-                <p className="my-0 fs-6 text-secondary">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </p>
-                <p className="my-0 fs-6 text-secondary">
-                  Lorem ipsum dolor sit amet.
-                </p>
-              </div>
-            </div>
-            <div>
-              <Button className="text-primary btn-outline-primary rounded-pill px-4 bg-transparent">
-                + Segui
-              </Button>
-            </div>
-          </div>
-          <hr />
-          <div className="d-flex justify-content-center align-items-center w-100">
-            <p className="fw-bold fs-5 my-0">Visualizza altro</p>
-            <BiArrowToRight className="fs-2 ms-2"></BiArrowToRight>
-          </div>
+          {/* Altri suggerimenti */}
         </div>
       </div>
 
       {/*_______________________POST___________________________________________*/}
       {posts.map((post, i) => {
-        const formattedDate = format(
-          new Date(post.user.createdAt),
-          "d MMMM yyyy"
-        );
+        const formattedDate = format(new Date(post.user.createdAt), "d MMMM yyyy");
         return (
-          <>
-            <div className="rounded-4 bg-white mt-2 " key={i}>
-              <div className="d-flex align-items-start p-3">
-                <div>
-                  <img
-                    src={post.user.image}
-                    width={60}
-                    height={60}
-                    className="rounded-circle me-2"
-                    alt="not_found"
-                  />
-                </div>
-                <div className="d-flex flex-column">
-                  <p className="text-secondary fs-6 my-0">
-                    <span className="text-black fs-5 fw-bold">
-                      {post.user.name}_{post.user.surname}
-                    </span>
-                  </p>
-                  <p className="text-secondary fs-6 my-0">{post.user.title}</p>
-                  <div className="d-flex align-items-center">
-                    <p className="text-secondary fs-6 my-0">{formattedDate}</p>
-                    <BiWorld className="ms-2 fs-4" />
-                  </div>
-                </div>
-              </div>
+          <div className="rounded-4 bg-white mt-2" key={i}>
+            <div className="d-flex align-items-start p-3">
               <div>
-                <p className="fs-6 mt-2 ps-3">{post.text}</p>
+                <img
+                  src={post.user.image}
+                  width={60}
+                  height={60}
+                  className="rounded-circle me-2"
+                  alt="not_found"
+                />
               </div>
-              <div
-                style={{ width: "100%", height: "auto", marginInline: "auto" }}
-              >
-                <img src={post.user.image} width={"100%"} height={350} alt="" />
-              </div>
-              <hr />
-              <div className="d-flex justify-content-around pb-3 ">
+              <div className="d-flex flex-column">
+                <p className="text-secondary fs-6 my-0">
+                  <span className="text-black fs-5 fw-bold">
+                    {post.user.name}_{post.user.surname}
+                  </span>
+                </p>
+                <p className="text-secondary fs-6 my-0">{post.user.title}</p>
                 <div className="d-flex align-items-center">
-                  <BiLike className="fs-4"></BiLike>
-                  <p className="fs-6 ms-2 my-0 fw-semibold">Like</p>
-                </div>
-                <div className="d-flex align-items-center">
-                  <div className="d-flex align-items-center">
-                    <BiHeart className="fs-4"></BiHeart>
-                    <p className="fs-6 ms-2 my-0 fw-semibold">
-                      Add to Favourites
-                    </p>
-                  </div>
-                </div>
-                <div className="d-flex align-items-center">
-                  <div className="d-flex align-items-center">
-                    <BiComment className="fs-4"></BiComment>
-                    <p className="fs-6 ms-2 my-0 fw-semibold">Comment</p>
-                  </div>
-                </div>
-                <div className="d-flex align-items-center">
-                  <div className="d-flex align-items-center">
-                    <BiXCircle onClick={() => deletePost(post._id)} className="fs-4"></BiXCircle>
-                    <p className="fs-6 ms-2 my-0 fw-semibold">Delete Post</p>
-                  </div>
+                  <p className="text-secondary fs-6 my-0">{formattedDate}</p>
+                  <BiWorld className="ms-2 fs-4" />
                 </div>
               </div>
             </div>
-          </>
+            <div>
+              <p className="fs-6 mt-2 ps-3">{post.text}</p>
+            </div>
+            <div
+              style={{ width: "100%", height: "auto", marginInline: "auto" }}
+            >
+              <img src={post.user.image} width={"100%"} height={350} alt="" />
+            </div>
+            <hr />
+            <div className="d-flex justify-content-around pb-3 ">
+              <div className="d-flex align-items-center">
+                <BiLike className="fs-4"></BiLike>
+                <p className="fs-6 ms-2 my-0 fw-semibold">Like</p>
+              </div>
+              <div className="d-flex align-items-center">
+                <div className="d-flex align-items-center">
+                  <BiHeart className="fs-4"></BiHeart>
+                  <p className="fs-6 ms-2 my-0 fw-semibold">Add to Favourites</p>
+                </div>
+              </div>
+              <div className="d-flex align-items-center">
+                <div className="d-flex align-items-center">
+                  <BiComment className="fs-4"></BiComment>
+                  <p className="fs-6 ms-2 my-0 fw-semibold">Comment</p>
+                </div>
+              </div>
+              <div className="d-flex align-items-center">
+                <div className="d-flex align-items-center">
+                  <BiXCircle
+                    onClick={() => deletePost(post._id)}
+                    className="fs-4"
+                  ></BiXCircle>
+                  <p className="fs-6 ms-2 my-0 fw-semibold">Delete Post</p>
+                </div>
+              </div>
+            </div>
+          </div>
         );
       })}
+    </Container>
+  );
+};
 
-
+export default Hero;
       {/* <div className="rounded-4 bg-white mt-2">
         <div className="d-flex mt-2 p-3">
           <div>
@@ -379,8 +337,4 @@ const Hero = () => {
           </div>
         </div>
       </div> */}
-    </Container>
-  );
-};
 
-export default Hero;
