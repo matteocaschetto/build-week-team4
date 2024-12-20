@@ -5,18 +5,14 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { BiLogoLinkedin } from "react-icons/bi";
-import {
-  BsBellFill,
-  BsFillHouseDoorFill,
-  BsFillPeopleFill,
-  BsSuitcaseLgFill,
-  BsChatDots
-} from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { BsBellFill, BsFillHouseDoorFill, BsFillPeopleFill, BsSuitcaseLgFill, BsChatDots } from "react-icons/bs";
+import { Link, useNavigate } from "react-router-dom";
 
 function MyNavbar() {
   const [profileImage, setProfileImage] = useState(null); // Stato per l'immagine del profilo
   const [isLoading, setIsLoading] = useState(true); // Stato per la gestione del caricamento
+  const [searchQuery, setSearchQuery] = useState(""); // Stato per la query di ricerca
+  const navigate = useNavigate(); // Hook per la navigazione
 
   // Funzione per caricare i dati del profilo
   useEffect(() => {
@@ -29,8 +25,8 @@ function MyNavbar() {
           {
             method: "GET",
             headers: {
-              Authorization: `Bearer ${token}`
-            }
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
 
@@ -50,6 +46,14 @@ function MyNavbar() {
     fetchProfile(); // Esegui il fetch quando il componente viene caricato
   }, []);
 
+  // Funzione per gestire l'invio della ricerca
+  const handleSearchSubmit = (e) => {
+    e.preventDefault(); // Impedisce il comportamento predefinito del form
+    if (searchQuery.trim()) {
+      navigate(`/jobs?search=${searchQuery}`); // Reindirizza alla pagina SearchPage con la query
+    }
+  };
+
   if (isLoading) {
     return <div>Caricamento...</div>; // Mostra "Caricamento..." mentre i dati sono in fase di caricamento
   }
@@ -63,12 +67,14 @@ function MyNavbar() {
         <Navbar.Toggle aria-controls="navbarScroll" />
 
         <Navbar.Collapse id="navbarScroll">
-          <Form className="d-flex ms-2">
+          <Form className="d-flex ms-2" onSubmit={handleSearchSubmit}>
             <Form.Control
               type="search"
               placeholder="Search"
               className="me-2"
               aria-label="Search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)} // Gestisce il cambiamento del valore della ricerca
             />
           </Form>
           <Nav

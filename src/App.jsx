@@ -7,6 +7,7 @@ import Profile from "./components/Profile";
 import Jobs from "./components/Jobs";
 import MyNavbar from "./components/MyNavbar";
 
+
 function App() {
   return (
     <BrowserRouter
@@ -20,7 +21,7 @@ function App() {
         <Route path="/" element={<HomeSection />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/jobs" element={<Jobs/>}/>
-      </Routes>
+       </Routes>
       <Footer />
     </BrowserRouter>
   );
