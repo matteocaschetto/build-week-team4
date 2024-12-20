@@ -79,7 +79,7 @@ useEffect (() =>{
           className="img-fluid rounded-top-4 "
           height={80}
         />
-        <img src={profile.image}width={100} height={100} style={{transform: "translate(-1%, -10%)", top:"35%", border:"4px,solid,white"}} className="rounded-circle ms-4 position-absolute start-0"
+        <img src={profile.image}width={100} height={100} style={{transform: "translate(-1%, -10%)", top:"35%", border:"4px,solid,white", objectFit: "cover" }} className="rounded-circle ms-4 position-absolute start-0"
         />
         <div className="px-3">
         <h3 className="ps-3 mx-0 mb-0" style={{marginTop:"80px"}}>{profile.name} {profile.surname}</h3>
