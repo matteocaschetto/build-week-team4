@@ -31,11 +31,46 @@ useEffect (() =>{
     fetchJobs();
 },[])
 
+  const [profile, setProfile] = useState(null);
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE"; // Replace with the actual token
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch(
+          "https://striveschool-api.herokuapp.com/api/profile/me",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Error fetching profile");
+        }
+
+        const data = await response.json();
+        setProfile(data);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    };
+
+    fetchProfile();
+  }, [token]);
+
+  if (!profile) {
+    return <div>Loading profile...</div>;
+  }
+
 
     return(
      <>
      <Container fluid>
-      <Row>
+      <Row className="d-flex justify-content-center">
         <Col className="d-none d-md-block col-md-4 col-lg-3">
         <div className="rounded-4 bg-white mt-2 position-relative">
         <img
@@ -44,15 +79,15 @@ useEffect (() =>{
           className="img-fluid rounded-top-4 "
           height={80}
         />
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxKQClJxfLRjnXNxZi2-6EwQlOgdOj_Sj1A&s"alt=""width={100} height={100} className="rounded-circle ms-4 position-absolute start-0" style={{top:"35%"}}
+        <img src={profile.image}width={100} height={100} style={{transform: "translate(-1%, -10%)", top:"35%", border:"4px,solid,white"}} className="rounded-circle ms-4 position-absolute start-0"
         />
         <div className="px-3">
-        <h3 className="ps-3 mx-0 mb-0" style={{marginTop:"80px"}}>Mario Rossi</h3>
-        <p className="ps-3 fw-semibold m-0">Architetto</p>
-        <p className="ps-3 mb-1">Torino, Piemonte</p>
+        <h3 className="ps-3 mx-0 mb-0" style={{marginTop:"80px"}}>{profile.name} {profile.surname}</h3>
+        <p className="ps-3 fw-semibold m-0">{profile.title}</p>
+        <p className="ps-3 mb-1">{profile.area}</p>
         </div>
         <div className="px-3 mt-2 w-100 align-items-center">
-        <Button className="text-secondary mb-4 mt-2" style={{paddingRight:"50%", backgroundColor:"#DFDEDA", borderColor:"#DFDEDA"}}><BiPlus className="fs-1 fw-bold pe-2"></BiPlus>Esperienza</Button>
+        <Button className="text-secondary mb-4 mt-2" style={{paddingRight:"40%", backgroundColor:"#DFDEDA", borderColor:"#DFDEDA"}}><BiPlus className="fs-1 fw-bold pe-0"></BiPlus>Esperienza</Button>
         </div>
       </div>
       <div className="rounded-4 p-3 bg-white mt-2">
@@ -71,10 +106,10 @@ useEffect (() =>{
        <Button className="bg-white fs-5 btn-outline-primary py-2 w-100 px-3 bg-transparent fw-semibold rounded-pill me-2 mb-3 mt-3  text-primary"><BiPencil className="fw-bolder fs-2 pe-1"></BiPencil>Pubblica offerta gratuita</Button>
       </div>
         </Col>
-        <Col className="col-12 col-md-8 col-lg-6">
+        <Col className="col-12 col-md-8 col-lg-5">
          <div className="rounded-4 p-3 bg-white mt-2">
             <div>
-            <p className="h1 fs-6 mb-2">Le principali offerte di lavoro per te</p>
+            <p className="h1 fs-5 mb-2">Le principali offerte di lavoro per te</p>
             <p className="h2 fs-6 text-secondary mb-4">In base al tuo profilo, alle tue preferenze e ad attività come candidature, ricerche e salvataggi</p>
             </div>
             {jobs.map((job,i) =>{
