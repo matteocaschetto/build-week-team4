@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Container } from "react-bootstrap";
+import { Button, Container, Spinner } from "react-bootstrap";
 import { BiWorld, BiLike, BiComment } from "react-icons/bi";
 import { format } from "date-fns";
 import ModalPost from "./ModalPost"; // Usa il tuo ModalPost
@@ -19,15 +19,12 @@ const Hero = () => {
   // Funzione per ottenere il profilo dell'utente e la sua immagine
   const fetchUserProfile = async () => {
     try {
-      const response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/profile/me",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const response = await fetch("https://striveschool-api.herokuapp.com/api/profile/me", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      );
+      });
 
       if (!response.ok) {
         throw new Error("Errore nel recupero del profilo");
@@ -42,15 +39,12 @@ const Hero = () => {
 
   const fetchMain = async () => {
     try {
-      const response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/posts/",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const response = await fetch("https://striveschool-api.herokuapp.com/api/posts/", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      );
+      });
 
       if (!response.ok) {
         throw new Error("Errore nel recupero dei post");
@@ -96,9 +90,7 @@ const Hero = () => {
       <div className="rounded-4 bg-white mt-2 p-3">
         <h3>La vita lavorativa dura in media 42 anni.</h3>
         <p>Investi nella tua crescita a lungo termine con Premium.</p>
-        <button className="rounded-4 bg-warning border border-none p-1 fw-semibold">
-          Scegli Premium
-        </button>
+        <button className="rounded-4 bg-warning border border-none p-1 fw-semibold">Scegli Premium</button>
       </div>
 
       {/* Altri contenuti del tuo feed */}
@@ -106,14 +98,7 @@ const Hero = () => {
       <div className="rounded-4 bg-white mt-2 px-3 pt-3 pb-3">
         <div className="d-flex">
           {/* Usa l'immagine del profilo dinamica */}
-          <img
-            src={profileImage}
-            alt="Profilo"
-            width={60}
-            height={60}
-            className="rounded-circle me-2"
-            style={{ objectFit: "cover" }}
-          />
+          <img src={profileImage} alt="Profilo" width={60} height={60} className="rounded-circle me-2" style={{ objectFit: "cover" }} />
           <Button
             className="d-flex bg-light border-secondary text-black rounded-pill w-100 flex-grow justify-content-start align-items-center"
             onClick={() => {
@@ -133,83 +118,83 @@ const Hero = () => {
       </div>
 
       {/* Sezione per visualizzare i post esistenti */}
-      {posts.map((post, i) => {
-        const formattedDate = format(
-          new Date(post.user.createdAt),
-          "d MMMM yyyy"
-        );
-        return (
-          <div className="rounded-4 bg-white mt-2" key={i}>
-            <div className="d-flex align-items-start p-3">
+      {posts.length > 0 ? (
+        posts.map((post, i) => {
+          const formattedDate = format(new Date(post.user.createdAt), "d MMMM yyyy");
+          return (
+            <div className="rounded-4 bg-white mt-2" key={i}>
+              <div className="d-flex align-items-start p-3">
+                <div>
+                  <img
+                    src={post.user.image}
+                    width={60}
+                    height={60}
+                    className="rounded-circle me-2"
+                    alt="not_found"
+                    style={{
+                      objectFit: "cover"
+                    }}
+                  />
+                </div>
+                <div className="d-flex flex-column">
+                  <p className="text-secondary fs-6 my-0">
+                    <span className="text-black fs-5 fw-bold">
+                      {post.user.name}_{post.user.surname}
+                    </span>
+                  </p>
+                  <p className="text-secondary fs-6 my-0">{post.user.title}</p>
+                  <div className="d-flex align-items-center">
+                    <p className="text-secondary fs-6 my-0">{formattedDate}</p>
+                    <BiWorld className="ms-2 fs-4" />
+                  </div>
+                </div>
+              </div>
               <div>
-                <img
-                  src={post.user.image}
-                  width={60}
-                  height={60}
-                  className="rounded-circle me-2"
-                  alt="not_found"
-                  style={{
-                    objectFit: "cover"
-                  }}
-                />
+                <p className="fs-6 mt-2 ps-3">{post.text}</p>
               </div>
-              <div className="d-flex flex-column">
-                <p className="text-secondary fs-6 my-0">
-                  <span className="text-black fs-5 fw-bold">
-                    {post.user.name}_{post.user.surname}
-                  </span>
-                </p>
-                <p className="text-secondary fs-6 my-0">{post.user.title}</p>
+              <div
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  marginInline: "auto",
+                  objectFit: "cover"
+                }}
+              >
+                {post.image && <img src={post.image} width={"100%"} alt="" />}
+              </div>
+              <hr />
+              <div
+                className="d-flex pb-3 "
+                style={{
+                  justifyContent: "space-evenly"
+                }}
+              >
                 <div className="d-flex align-items-center">
-                  <p className="text-secondary fs-6 my-0">{formattedDate}</p>
-                  <BiWorld className="ms-2 fs-4" />
+                  <BiLike className="fs-4"></BiLike>
+                  <p className="fs-6 ms-2 my-0 fw-semibold">Consiglia</p>
+                </div>
+                <div className="d-flex align-items-center"></div>
+                <div className="d-flex align-items-center">
+                  <div className="d-flex align-items-center">
+                    <BiComment className="fs-4"></BiComment>
+                    <p className="fs-6 ms-2 my-0 fw-semibold">Comment</p>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center">
+                  <div className="d-flex align-items-center">
+                    <Trash onClick={() => deletePost(post._id)} className="fs-4"></Trash>
+                    <p className="fs-6 ms-2 my-0 fw-semibold">Delete</p>
+                  </div>
                 </div>
               </div>
             </div>
-            <div>
-              <p className="fs-6 mt-2 ps-3">{post.text}</p>
-            </div>
-            <div
-              style={{
-                width: "100%",
-                height: "auto",
-                marginInline: "auto",
-                objectFit: "cover"
-              }}
-            >
-              {post.image && <img src={post.image} width={"100%"} alt="" />}
-            </div>
-            <hr />
-            <div
-              className="d-flex pb-3 "
-              style={{
-                justifyContent: "space-evenly"
-              }}
-            >
-              <div className="d-flex align-items-center">
-                <BiLike className="fs-4"></BiLike>
-                <p className="fs-6 ms-2 my-0 fw-semibold">Consiglia</p>
-              </div>
-              <div className="d-flex align-items-center"></div>
-              <div className="d-flex align-items-center">
-                <div className="d-flex align-items-center">
-                  <BiComment className="fs-4"></BiComment>
-                  <p className="fs-6 ms-2 my-0 fw-semibold">Comment</p>
-                </div>
-              </div>
-              <div className="d-flex align-items-center">
-                <div className="d-flex align-items-center">
-                  <Trash
-                    onClick={() => deletePost(post._id)}
-                    className="fs-4"
-                  ></Trash>
-                  <p className="fs-6 ms-2 my-0 fw-semibold">Delete</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      })}
+          );
+        })
+      ) : (
+        <Spinner className="text-center mt-4" animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      )}
     </Container>
   );
 };
