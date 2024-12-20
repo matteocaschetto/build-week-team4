@@ -5,8 +5,8 @@ export const Footer = () => {
   return (
     <>
       <Container fluid style={{marginTop:"50px"}}>
-        <Row className="mt-3">
-          <Col className="col-12 col-lg-7">
+        <Row className="mt-3 gy-4">
+          <Col className="col-12 col-lg-6">
             <Row>
               <Col className="col-6 col-lg-4 col mb-3">
                 <a href="" className="fs-6 text-decoration-none text-black">
@@ -75,8 +75,8 @@ export const Footer = () => {
               </Col>
             </Row>
           </Col>
-          <Col className="col-12 col-lg-5 d-lg-flex d-block">
-            <Col className="col-12 col-lg-6">
+          <Col className="col-12 col-lg-6 d-flex">
+            <Col className="col-6">
               <div className="d-flex">
                 <div>
                   <BiQuestionMark fill="text-black"></BiQuestionMark>
@@ -111,7 +111,7 @@ export const Footer = () => {
                 </div>
               </div>
             </Col>
-            <Col className="col-4 col-lg-6">
+            <Col className="col-6">
               <Form>
                 <Form.Label htmlFor="LanguageSelector">Select Language</Form.Label>
                 <Form.Select>

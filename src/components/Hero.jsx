@@ -67,7 +67,7 @@ const Hero = () => {
       }
 
       const data = await response.json();
-      setPosts(data.slice(1800, 1810));
+      setPosts(data.slice(1830,));
       setCreatePost(createdPosts);
     } catch (error) {
       console.error("Errore nel recupero dei post:", error);
