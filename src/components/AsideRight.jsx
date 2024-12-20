@@ -2,7 +2,8 @@ import { Button, Col, Row } from "react-bootstrap";
 import { BiPencil } from "react-icons/bi";
 import { useState, useEffect } from "react";
 import { RiSendPlaneFill } from "react-icons/ri";
-import { CgUserAdd } from "react-icons/cg";
+
+import { Link } from "react-router-dom"; // Importa Link per la navigazione
 
 export const AsideR = () => {
   const [profiles, setProfiles] = useState([]);
@@ -130,12 +131,16 @@ export const AsideR = () => {
                         <p className="m-0" style={{ fontSize: "0.8rem" }}>
                           {profile.title}
                         </p>
-                        <Button
-                          className="rounded-pill fw-semibold mt-2 text-dark btn-outline-dark bg-transparent btn-sm"
-                          style={{ fontSize: "0.9rem", width: "130px" }}
+                        <Link
+                          to={`/profile/${profile._id}`} // Cliccando sul profilo, si naviga alla pagina del profilo
                         >
-                          <RiSendPlaneFill className="me-2" /> Messaggio
-                        </Button>
+                          <Button
+                            className="rounded-pill fw-semibold mt-2 text-dark btn-outline-dark bg-transparent btn-sm"
+                            style={{ fontSize: "0.9rem", width: "130px" }}
+                          >
+                            <RiSendPlaneFill className="me-2" /> Messaggio
+                          </Button>
+                        </Link>
                         <hr style={{ width: "100%" }} />
                       </div>
                     </div>
@@ -156,57 +161,8 @@ export const AsideR = () => {
               alt="hiring"
             />
           </div>
-
-          {/* Sezione Persone che potresti conoscere */}
-          <div className="mt-2 bg-white py-2" style={{ borderRadius: "10px" }}>
-            <div className="px-3">
-              <h4 className="fw-semibold my-2 fs-6">
-                Persone che potresti conoscere
-              </h4>
-              {profiles.length > 0 ? (
-                profiles.slice(100, 103).map((profile) => (
-                  <div key={profile._id}>
-                    <div className="col mx-auto d-flex align-items-middle mt-2">
-                      <div className="d-flex justify-content-end">
-                        <img
-                          src={profile.image}
-                          alt={profile.name}
-                          className="rounded-circle"
-                          width={"40px"}
-                          height={"40px"}
-                        />
-                      </div>
-                      <div className="col d-flex flex-column ms-2">
-                        <p
-                          className="m-0 fw-semibold"
-                          style={{ fontSize: "0.9rem" }}
-                        >
-                          {profile.name}
-                        </p>
-                        <p className="m-0" style={{ fontSize: "0.8rem" }}>
-                          {profile.title}
-                        </p>
-                        <div className="mt-2">
-                          <Button
-                            className="rounded-pill fw-semibold text-dark btn-outline-dark bg-transparent btn-sm"
-                            style={{ fontSize: "0.9rem", width: "130px" }}
-                          >
-                            <CgUserAdd className="me-2 fs-5 fw-bold" />{" "}
-                            Collegati
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                    <hr style={{ width: "100%" }} />
-                  </div>
-                ))
-              ) : (
-                <p>Nessuna persona trovata.</p>
-              )}
-            </div>
-          </div>
         </Col>
       </Row>
     </>
   );
-};
+}

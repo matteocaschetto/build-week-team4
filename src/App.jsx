@@ -6,6 +6,7 @@ import HomeSection from "./components/HomeSection";
 import Profile from "./components/Profile";
 import Jobs from "./components/Jobs";
 import MyNavbar from "./components/MyNavbar";
+import OtherProfile from "./components/OtherProfile"
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/" element={<HomeSection />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/jobs" element={<Jobs/>}/>
+        <Route path="/profile/:id" element={<OtherProfile />} /> 
        </Routes>
       <Footer />
     </BrowserRouter>
