@@ -37,6 +37,10 @@ const ModalPost = (props) => {
           setSuccessMessage("Post aggiunto!");
           setErrorMessage("");
           dispatch({ type: "CREATE_POST", payload: data }); // Aggiungi il post al Redux store
+          setPost({});
+          setTimeout(() => {
+            props.onHide(), setSuccessMessage("");
+          }, 3000);
         } else {
           setErrorMessage("Errore durante la creazione del post!");
         }
