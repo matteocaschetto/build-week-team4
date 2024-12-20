@@ -51,7 +51,7 @@ const Hero = () => {
       }
 
       const data = await response.json();
-      setPosts(data.slice(1940, 1980)); // Modifica qui il range dei post che vuoi visualizzare
+      setPosts(data.slice(1980, 2000)); // Modifica qui il range dei post che vuoi visualizzare
     } catch (error) {
       console.error("Errore nel recupero dei post:", error);
     }

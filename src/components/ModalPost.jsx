@@ -4,10 +4,9 @@ import { useDispatch } from "react-redux";
 
 const ModalPost = (props) => {
   const [post, setPost] = useState({ text: "", URL: "" });
-  const [successMessage, setSuccessMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
-
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE";
 
@@ -37,6 +36,11 @@ const ModalPost = (props) => {
           setSuccessMessage("Post aggiunto!");
           setErrorMessage("");
           dispatch({ type: "CREATE_POST", payload: data }); // Aggiungi il post al Redux store
+
+          setPost({});
+          setTimeout(() => {
+            props.onHide();
+          }, 3000);
         } else {
           setErrorMessage("Errore durante la creazione del post!");
         }
@@ -48,16 +52,9 @@ const ModalPost = (props) => {
   };
 
   return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
+    <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Crea un Nuovo Post!
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Crea un Nuovo Post!</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
