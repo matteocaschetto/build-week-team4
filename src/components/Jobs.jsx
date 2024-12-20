@@ -93,12 +93,12 @@ useEffect (() =>{
       <div className="rounded-4 p-3 bg-white mt-2">
         <div className="d-flex flex-column">
           <div className="d-flex align-items-center ps-2 mt-4">
-            <BiListUl className="fs-1 fw-bolder text-black"></BiListUl>
-            <p className="mb-0 fs-4 fw-semibold ps-4 text-black">Preferenze</p>
+            <BiListUl className="fs-2 fw-bolder text-black"></BiListUl>
+            <p className="mb-0 fs-5 fw-semibold ps-3 text-black">Preferenze</p>
           </div>
           <div className="d-flex align-items-center ps-2 my-4">
-             <BsFillSaveFill  className="fs-2 fw-bolder text-black"></BsFillSaveFill>
-             <p className="mb-0 fs-4 fw-semibold ps-4">Le mie offerte di lavoro</p>
+             <BsFillSaveFill  className="fs-4 fw-bolder text-black"></BsFillSaveFill>
+             <p className="mb-0 fs-5 fw-semibold ps-3">Le mie offerte di lavoro</p>
           </div>
         </div>
       </div>
