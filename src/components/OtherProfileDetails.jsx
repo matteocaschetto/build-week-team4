@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Button, Container } from "react-bootstrap";
-import { IoIosAddCircle } from "react-icons/io";
-
+import { RiSendPlaneFill } from "react-icons/ri";
+import { IoMdCheckmark} from "react-icons/io";
+import { BiDotsHorizontalRounded } from "react-icons/bi";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { IoPencil } from "react-icons/io5";
@@ -10,16 +11,18 @@ import ModalToAddExperience from "./ModalToAddExperience";
 import { useDispatch, useSelector } from "react-redux";
 import ModalEditExperience from "./ModalEditExperience";
 import { Trash } from "react-bootstrap-icons";
+import { useParams } from "react-router-dom"; // Assicurati di usare il parametro userId
 
-const ProfileDetails = () => {
-  const [profile, setProfile] = useState(null); // Stato per memorizzare i dati del profilo
-  const [isLoading, setIsLoading] = useState(true); // Stato per la gestione del caricamento
-  const [modalShow, setModalShow] = useState(false); // stato per gestione del modale
+const OtherProfileDetails = () => {
+  const { userId } = useParams(); // Ottieni l'ID dell'utente dalla URL
+  const [profile, setProfile] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [modalShow, setModalShow] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
   const [experiences, setExperiences] = useState([]);
   const [selectedExperience, setSelectedExperience] = useState({});
-  const [imageFile, setImageFile] = useState(null); // Stato per il file immagine
-  const [experienceImages, setExperienceImages] = useState([]); // Stato per le immagini delle esperienze
+  const [imageFile, setImageFile] = useState(null);
+  const [experienceImages, setExperienceImages] = useState([]);
   const allExperiences = useSelector((state) => state.experiences);
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwNWU4NDc0YTg2ODAwMTVkYjU0ZjkiLCJpYXQiOjE3MzQzNjg5MDAsImV4cCI6MTczNTU3ODUwMH0.qlKB2g8pPEkFuSrRMQ84ltLLbqQEaT46Vch8Hu9AHiE";
@@ -50,7 +53,7 @@ const ProfileDetails = () => {
     const fetchProfile = async () => {
       try {
         const response = await fetch(
-          "https://striveschool-api.herokuapp.com/api/profile/me",
+          `https://striveschool-api.herokuapp.com/api/profile/${profile._id}`, // Usa l'ID dell'utente specifico
           {
             method: "GET",
             headers: {
@@ -74,7 +77,7 @@ const ProfileDetails = () => {
     };
 
     fetchProfile();
-  }, []);
+  }, [userId]); // Usa userId come dipendenza per fare una nuova richiesta quando cambia l'ID
 
   useEffect(() => {
     if (profile) {
@@ -96,8 +99,7 @@ const ProfileDetails = () => {
   }, [profile, allExperiences]);
 
   const handleImageChange = (e, experienceId) => {
-    setImageFile(e.target.files[0]); // Salva il file immagine selezionato
-    // Salva l'immagine per una specifica esperienza
+    setImageFile(e.target.files[0]);
     const newExperienceImages = { ...experienceImages };
     newExperienceImages[experienceId] = e.target.files[0];
     setExperienceImages(newExperienceImages);
@@ -110,7 +112,7 @@ const ProfileDetails = () => {
     }
 
     const formData = new FormData();
-    formData.append("experienceImage", imageFile); // Aggiungi il file immagine per esperienza
+    formData.append("experienceImage", imageFile);
 
     try {
       const response = await fetch(
@@ -120,7 +122,7 @@ const ProfileDetails = () => {
           headers: {
             Authorization: `Bearer ${token}`
           },
-          body: formData // Invia i dati del modulo contenenti l'immagine
+          body: formData
         }
       );
 
@@ -130,10 +132,9 @@ const ProfileDetails = () => {
 
       const data = await response.json();
       alert("Experience image uploaded successfully!");
-      // Aggiorna la lista delle esperienze
       const updatedExperiences = experiences.map((exp) =>
         exp._id === experienceId
-          ? { ...exp, image: data.image } // Aggiorna l'immagine dell'esperienza
+          ? { ...exp, image: data.image }
           : exp
       );
       setExperiences(updatedExperiences);
@@ -179,32 +180,6 @@ const ProfileDetails = () => {
             className="ms-4 "
           />
 
-          {/* Pulsanti di modifica immagine */}
-          <div className="d-flex gap-2 ms-auto align-items-center position-relative">
-            <Button
-              variant="primary"
-              onClick={() =>
-                document.getElementById("profile-image-input").click()
-              }
-              className="rounded-circle btn btn-sm"
-            >
-              <IoIosAddCircle />
-            </Button>
-            <input
-              type="file"
-              id="profile-image-input"
-              accept="image/*"
-              onChange={handleImageChange}
-              style={{ display: "none" }}
-            />
-            <Button
-              variant="primary"
-              className="btn btn-sm rounded-pill me-2"
-              onClick={handleImageUpload}
-            >
-              Update Profile Picture
-            </Button>
-          </div>
         </div>
 
         <div className="d-flex justify-content-between w-100 align-items-center mt-3 ps-4">
@@ -218,7 +193,19 @@ const ProfileDetails = () => {
           </div>
         </div>
 
-        
+        <div className="d-flex gap-3 ms-3 mb-3">
+          <Button variant="primary" className="rounded-pill">
+            <RiSendPlaneFill className="me-2" />
+            Invia Messaggio
+          </Button>
+          <button className="rounded-pill btn btn-outline-primary">
+            <IoMdCheckmark />
+            Già Segui
+          </button>
+          <button className="rounded-circle btn btn-outline-primary">
+            <BiDotsHorizontalRounded />
+          </button>
+        </div>
         <div className="border border-top">
           <Tabs
             defaultActiveKey="profile"
@@ -340,7 +327,6 @@ const ProfileDetails = () => {
                   {exp.endDate.slice(0, 10)}
                 </p>
 
-                {/* Caricamento e visualizzazione immagini per esperienza */}
                 <div className="mt-2">
                   <input
                     type="file"
@@ -348,7 +334,6 @@ const ProfileDetails = () => {
                     accept="image/*"
                     className="mb-2"
                   />
-                  
                   {experienceImages[exp._id] && (
                     <div className="mt-3">
                       <img
@@ -378,4 +363,4 @@ const ProfileDetails = () => {
   );
 };
 
-export default ProfileDetails;
+export default OtherProfileDetails;
